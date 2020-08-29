@@ -21,4 +21,3 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* Testing git push me too me three
