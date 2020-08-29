@@ -17,15 +17,15 @@ u1 = User.create!(
 )
 
 u2 = User.create!(
-  email: "luke@ga.co",
+  email: "jam@ga.co",
   password: "chicken",
-  name: "Luke"
+  name: "Jam"
 )
 
 u3 = User.create!(
-  email: "zara@ga.co",
+  email: "swaroop@ga.co",
   password: "chicken",
-  name: "Zara"
+  name: "Swaroop"
 )
 
 u4 = User.create!(
@@ -34,83 +34,130 @@ u4 = User.create!(
   name: "Kate"
 )
 
+u5 = User.create!(
+  email: "luke@ga.co",
+  password: "chicken",
+  name: "Luke"
+)
+
+u6 = User.create!(
+  email: "zara@ga.co",
+  password: "chicken",
+  name: "Zara"
+)
+
 puts "Created #{User.count} users."
-
-# ------------------------ Message ----------------------- #
-
-Message.destroy_all
-
-m1 = Message.create!(
-  sender_id: u1.id,
-  recipient_id: u2.id,
-  content: "Hi Luke, you are so creative!"
-)
-
-m2 = Message.create!(
-  sender_id: u2.id,
-  recipient_id: u1.id,
-  content: "How are you?"
-)
-
-m3 = Message.create!(
-  sender_id: u1.id,
-  recipient_id: u4.id,
-  content: "Wazzzzzzzzzzap!!!!"
-)
-
-m4 = Message.create!(
-  sender_id: u2.id,
-  recipient_id: u3.id,
-  content: "Lek shu habibi"
-)
-
-m5 = Message.create!(
-  sender_id: u3.id,
-  recipient_id: u2.id,
-  content: "大家好，周末愉快！"
-)
-
-puts "Created #{Message.count} messages."
 
 # ---------------------- Friend --------------------- #
 
-Friend.destroy_all
+Friendship.destroy_all
 
-f1 = Friend.create!(
-  userA_id: u1.id,
-  userB_id: u3.id,
+f1 = Friendship.create!(
+  user_id: u1.id,
+  friend_id: u3.id,
   status: "confirmed"
 )
 
-f2 = Friend.create!(
-  userA_id: u1.id,
-  userB_id: u2.id,
+f2 = Friendship.create!(
+  user_id: u1.id,
+  friend_id: u2.id,
   status: "confirmed"
 )
 
-f3 = Friend.create!(
-  userA_id: u1.id,
-  userB_id: u4.id,
+f3 = Friendship.create!(
+  user_id: u1.id,
+  friend_id: u4.id,
   status: "pending"
 )
 
-f4 = Friend.create!(
-  userA_id: u2.id,
-  userB_id: u3.id,
+f4 = Friendship.create!(
+  user_id: u2.id,
+  friend_id: u3.id,
   status: "confirmed"
 )
 
-f5 = Friend.create!(
-  userA_id: u3.id,
-  userB_id: u4.id,
-  status: "blocked"
+f5 = Friendship.create!(
+  user_id: u3.id,
+  friend_id: u4.id,
+  status: "confirmed"
 )
 
-puts "Created #{Friend.count} friends."
-puts "Created user: #{u1.id}"
+f6 = Friendship.create!(
+  user_id: u5.id,
+  friend_id: u1.id,
+  status: "confirmed"
+)
+
+f7 = Friendship.create!(
+  user_id: u5.id,
+  friend_id: u2.id,
+  status: "confirmed"
+)
+
+f8 = Friendship.create!(
+  user_id: u5.id,
+  friend_id: u3.id,
+  status: "pending"
+)
+
+f9 = Friendship.create!(
+  user_id: u6.id,
+  friend_id: u1.id,
+  status: "confirmed"
+)
+
+f10 = Friendship.create!(
+  user_id: u6.id,
+  friend_id: u3.id,
+  status: "pending"
+)
+
+f11 = Friendship.create!(
+  user_id: u6.id,
+  friend_id: u4.id,
+  status: "confirmed"
+)
+
+puts "Created #{Friendship.count} friends."
+
+# ------------------------ Message ----------------------- #
+
+# Message.destroy_all
+
+# m1 = Message.create!(
+#   sender_id: u1.id,
+#   recipient_id: u2.id,
+#   content: "Hi Luke, you are so creative!"
+# )
+
+# m2 = Message.create!(
+#   sender_id: u2.id,
+#   recipient_id: u1.id,
+#   content: "How are you?"
+# )
+
+# m3 = Message.create!(
+#   sender_id: u1.id,
+#   recipient_id: u4.id,
+#   content: "Wazzzzzzzzzzap!!!!"
+# )
+
+# m4 = Message.create!(
+#   sender_id: u2.id,
+#   recipient_id: u3.id,
+#   content: "Lek shu habibi"
+# )
+
+# m5 = Message.create!(
+#   sender_id: u3.id,
+#   recipient_id: u2.id,
+#   content: "大家好，周末愉快！"
+# )
+
+# puts "Created #{Message.count} messages."
+
+
 
 # ---------------------- Association --------------------- #
 
-u1.friends << f1 << f2 << f3
-u2.friends << f4
-u3.friends << f5
+
