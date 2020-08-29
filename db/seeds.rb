@@ -111,6 +111,6 @@ puts "Created user: #{u1.id}"
 
 # ---------------------- Association --------------------- #
 
-# u1.friends << f1 << f2 << f3
-# u2.friends << f4
-# u3.friends << f5
+u1.friends << f1 << f2 << f3
+u2.friends << f4
+u3.friends << f5
