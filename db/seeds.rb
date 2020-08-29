@@ -17,15 +17,15 @@ u1 = User.create!(
 )
 
 u2 = User.create!(
-  email: "luke@ga.co",
+  email: "jam@ga.co",
   password: "chicken",
-  name: "Luke"
+  name: "Jam"
 )
 
 u3 = User.create!(
-  email: "zara@ga.co",
+  email: "swaroop@ga.co",
   password: "chicken",
-  name: "Zara"
+  name: "Swaroop"
 )
 
 u4 = User.create!(
@@ -34,7 +34,91 @@ u4 = User.create!(
   name: "Kate"
 )
 
+u5 = User.create!(
+  email: "luke@ga.co",
+  password: "chicken",
+  name: "Luke"
+)
+
+u6 = User.create!(
+  email: "zara@ga.co",
+  password: "chicken",
+  name: "Zara"
+)
+
 puts "Created #{User.count} users."
+
+# ---------------------- Friend --------------------- #
+
+Friendship.destroy_all
+
+f1 = Friendship.create!(
+  user_id: u1.id,
+  friend_id: u3.id,
+  status: "confirmed"
+)
+
+f2 = Friendship.create!(
+  user_id: u1.id,
+  friend_id: u2.id,
+  status: "confirmed"
+)
+
+f3 = Friendship.create!(
+  user_id: u1.id,
+  friend_id: u4.id,
+  status: "pending"
+)
+
+f4 = Friendship.create!(
+  user_id: u2.id,
+  friend_id: u3.id,
+  status: "confirmed"
+)
+
+f5 = Friendship.create!(
+  user_id: u3.id,
+  friend_id: u4.id,
+  status: "confirmed"
+)
+
+f6 = Friendship.create!(
+  user_id: u5.id,
+  friend_id: u1.id,
+  status: "confirmed"
+)
+
+f7 = Friendship.create!(
+  user_id: u5.id,
+  friend_id: u2.id,
+  status: "confirmed"
+)
+
+f8 = Friendship.create!(
+  user_id: u5.id,
+  friend_id: u3.id,
+  status: "pending"
+)
+
+f9 = Friendship.create!(
+  user_id: u6.id,
+  friend_id: u1.id,
+  status: "confirmed"
+)
+
+f10 = Friendship.create!(
+  user_id: u6.id,
+  friend_id: u3.id,
+  status: "pending"
+)
+
+f11 = Friendship.create!(
+  user_id: u6.id,
+  friend_id: u4.id,
+  status: "confirmed"
+)
+
+puts "Created #{Friendship.count} friends."
 
 # ------------------------ Message ----------------------- #
 
@@ -67,50 +151,72 @@ m4 = Message.create!(
 m5 = Message.create!(
   sender_id: u3.id,
   recipient_id: u2.id,
-  content: "大家好，周末愉快！"
+  content: "大家好，周末愉快!"
+)
+
+m6 = Message.create!(
+  sender_id: u2.id,
+  recipient_id: u1.id,
+  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+)
+
+m7 = Message.create!(
+  sender_id: u2.id,
+  recipient_id: u1.id,
+  content: "How are you?"
+)
+
+m8 = Message.create!(
+  sender_id: u1.id,
+  recipient_id: u2.id,
+  content: "Wazzzzzzzzzzap!!!!Wazzzzzzzzzzap!!!!Wazzzzzzzzzzap!!!!Wazzzzzzzzzzap!!!!"
+)
+
+m9 = Message.create!(
+  sender_id: u2.id,
+  recipient_id: u1.id,
+  content: "Lek shu habibi. Lek shu habibi. Lek shu habibi."
+)
+
+m10 = Message.create!(
+  sender_id: u3.id,
+  recipient_id: u1.id,
+  content: "The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables."
+)
+
+m11 = Message.create!(
+  sender_id: u2.id,
+  recipient_id: u1.id,
+  content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+)
+
+m12 = Message.create!(
+  sender_id: u3.id,
+  recipient_id: u1.id,
+  content: "Ut aliquam purus sit amet luctus venenatis lectus magna fringilla. "
+)
+
+m13 = Message.create!(
+  sender_id: u1.id,
+  recipient_id: u3.id,
+  content: "Odio euismod lacinia at quis risus sed. Sem integer vitae justo eget magna. Nibh tellus molestie nunc non blandit massa. "
+)
+
+m14 = Message.create!(
+  sender_id: u1.id,
+  recipient_id: u2.id,
+  content: "Fermentum posuere urna nec tincidunt praesent. In massa tempor nec feugiat nisl pretium fusce id velit. Neque sodales ut etiam sit amet nisl purus."
+)
+
+m15 = Message.create!(
+  sender_id: u1.id,
+  recipient_id: u2.id,
+  content: "Blandit volutpat maecenas volutpat blandit aliquam etiam erat velit scelerisque."
 )
 
 puts "Created #{Message.count} messages."
 
-# ---------------------- Friend --------------------- #
-
-Friend.destroy_all
-
-f1 = Friend.create!(
-  userA_id: u1.id,
-  userB_id: u3.id,
-  status: "confirmed"
-)
-
-f2 = Friend.create!(
-  userA_id: u1.id,
-  userB_id: u2.id,
-  status: "confirmed"
-)
-
-f3 = Friend.create!(
-  userA_id: u1.id,
-  userB_id: u4.id,
-  status: "pending"
-)
-
-f4 = Friend.create!(
-  userA_id: u2.id,
-  userB_id: u3.id,
-  status: "confirmed"
-)
-
-f5 = Friend.create!(
-  userA_id: u3.id,
-  userB_id: u4.id,
-  status: "blocked"
-)
-
-puts "Created #{Friend.count} friends."
-puts "Created user: #{u1.id}"
 
 # ---------------------- Association --------------------- #
 
-u1.friends << f1 << f2 << f3
-u2.friends << f4
-u3.friends << f5
+
