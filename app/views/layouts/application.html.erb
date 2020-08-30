@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>GaChat</title>
+    <title>GA-Chat</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,22 @@
   </head>
 
   <body>
+    <nav class="main_nav">
+      <div class="main_nav_logo_wrapper">
+        Logo
+      </div>
+      <div class="main_nav_item_wrapper">
+        <ul class="main_nav_item">
+          <li>Messages</li>
+          <li>Friends</li>
+          <li>User Center</li>
+        </ul>
+      </div>
+    </nav>
+    
     <%= yield %>
+
+
   </body>
+
 </html>

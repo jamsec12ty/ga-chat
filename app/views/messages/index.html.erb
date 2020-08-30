@@ -1,0 +1,18 @@
+<h1>Messages</h1>
+
+<nav class="message_nav">
+  <ul class="message_list">
+    <% @messaged_friends.each do |friend| %>
+      <li>
+        <h3><%= friend.name %></h3>
+        <% last_message = Message.where(["sender_id = ? and recipient_id = ?",  @current_user.id, friend.id] | ["sender_id = ? and recipient_id = ?", friend.id, @current_user.id]).last %>
+        <% if last_message.created_at > Time.now.beginning_of_day %>
+          <p><%= last_message.created_at.strftime("%l:%M %p") %></p>
+        <% else %>
+          <p><%= last_message.created_at.strftime("%e %b %Y") %></p>
+        <% end %>
+        <p><%= last_message.content %></p>
+      </li>
+    <% end %>
+  </ul>
+</nav>
