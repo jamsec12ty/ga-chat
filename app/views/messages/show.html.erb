@@ -1,2 +1,28 @@
-<h1>Messages#show</h1>
-<p>Find me in app/views/messages/show.html.erb</p>
+<div class="message_window">
+  <div class="message_wrapper">
+    <ul>
+    <% @conversation_messages.each do |message| %>
+      <li>
+        <p><strong><%= message.sender.name %></strong></p>
+        <p><%= message.content %></p>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="new_messages">
+
+  <div class="message_send_wrapper">
+      <%= form_for @message do |f| %>
+        <%= f.hidden_field :recipient_id, value: @recipient_id %>
+        <%= f.text_field :content %>
+        <%= f.submit "Send" %>
+      <% end %>
+
+      <div class="error_message">
+      <% if flash[:error] %>
+        <strong><%= flash[:error] %></strong>
+      <% end %>
+      </div>
+  </div>
+</div>

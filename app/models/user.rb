@@ -10,7 +10,7 @@ class User < ApplicationRecord
   has_many :friends_request_confirmed, -> {merge(Friendship.friends)}, through: :request_received, source: :user
 
   def friends 
-    (friends_sent_confirmed + friends_request_confirmed).uniq
+    (friends_sent_confirmed + friends_request_confirmed).uniq.sort_by(&:created_at)
   end
 
   # Unconfirmed friend requests
@@ -23,7 +23,7 @@ class User < ApplicationRecord
   has_many :received_messages, class_name: "Message", foreign_key: "recipient_id", inverse_of: "recipient", dependent: :destroy
 
   def all_messages
-    sent_messages + received_messages
+    (sent_messages + received_messages).sort_by(&:created_at)
   end
 
   # Get messaged friends
@@ -31,7 +31,7 @@ class User < ApplicationRecord
   has_many :received_messages_friends, -> {merge(User.all)}, through: :received_messages, source: :sender
 
   def all_messaged_friends
-    (sent_messages_friends + received_messages_friends).uniq
+    (sent_messages_friends + received_messages_friends).uniq.sort_by(&:created_at)
   end
 
   # ---------------------- Validation ---------------------- #
