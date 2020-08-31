@@ -25,18 +25,24 @@ class UsersController < ApplicationController
 
     def show
       @user = User.find params[:id]
+      # redirect_to(user_path(params[:id])) unless @user.id == @current_user.id
     end
 
 
 
     def edit
-      @user = User.find params[:id]
+      @user = User.find params[:id] #from /users/:id
+      redirect_to(user_path(params[:id])) unless @user.id == @current_user.id
     end
 
 
 
     def update
       @user = User.find params[:id] #from /users/:id
+        if @user.id != @current_user.id
+          redirect_to(user_path(params[:id]))
+          return
+        end
       @user.update user_params
       redirect_to user_path(@user)
     end
@@ -52,7 +58,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-      params.require(:user).permit( :name, :email, :password, :password_confirmation)
+      params.require(:user).permit( :name, :email, :password, :password_confirmation, :image)
     end # user_params
 
 
