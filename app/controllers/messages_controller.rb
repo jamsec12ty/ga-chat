@@ -3,7 +3,6 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @current_user = User.first
     @message = Message.create message_params
     # if @message.persisted?
     @current_user.sent_messages << @message
@@ -12,7 +11,6 @@ class MessagesController < ApplicationController
   end
 
   def index
-    @current_user = User.first
     @messaged_friends = @current_user.all_messaged_friends
 
     @recipient_id = @messaged_friends.first.id
@@ -20,7 +18,6 @@ class MessagesController < ApplicationController
   end
   
   def show
-    @current_user = User.first
     @recipient_id = params[:id]
     @conversation_messages = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, @recipient_id]) + Message.where(["sender_id = ? and recipient_id = ?", @recipient_id, @current_user.id])).sort_by(&:created_at)
 
