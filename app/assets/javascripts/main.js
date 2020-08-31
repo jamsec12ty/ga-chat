@@ -13,7 +13,7 @@ $(document).ready(function () {
     e.preventDefault();
     $('.message_results').empty();
 
-    const query = $('.message_search_text').val();
+    const query = $('.message_search_text').val().toLowerCase();
     const searchURL = `/messages/search`;
     const string = query.replace(/(\s+)/, "(<[^>]+>)*$1(<[^>]+>)*");
     const pattern = new RegExp("(" + string + ")", "gi");
@@ -23,16 +23,15 @@ $(document).ready(function () {
       $('.message_search_text').val('');
       console.log(data);
       data.forEach(message => {
-        if (message.content.toLowerCase().includes(string)) {
+        let index = message.content.toLowerCase().indexOf(query);
+        if (index >= 0) {
+          let keyWords = message.content.substr(index, query.length);
+          let results = message.content.replace(pattern, `<mark>${keyWords}</mark>`);
           $('.message_results').append(
-            `<p class="message_results_item">${message.content}</p>
+            `<p>${results}</p>
             <p>${message.sender.name} to ${message.recipient.name}</p>
             <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>`
             )
-          let results = $('.message_results_item').html();
-          results = results.replace(pattern, `<mark>${query}</mark>`);
-          $('.message_results_item').html(results);
-          $('.message_results_item').removeClass('message_results_item');
         }
       });
       if ($('.message_results').html() === '') {
