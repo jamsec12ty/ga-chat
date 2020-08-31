@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   resources :users
 
   # ----------------------- Messages ----------------------- #
+  get "/messages/search" => "messages#message_search"
+  
   resources :messages
   
-  get "/messages/search/:query" => "messages#message_search"
-
 end

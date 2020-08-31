@@ -15,7 +15,6 @@ class MessagesController < ApplicationController
 
   def index
     @messaged_friends = @current_user.all_messaged_friends
-
   end
   
   def show
@@ -35,7 +34,8 @@ class MessagesController < ApplicationController
   end
 
   def message_search
-    render json: Message.where(sender_id: @current_user.id).or(Message.where(recipient_id: @current_user.id))
+    messages = Message.where(sender_id: @current_user.id).or(Message.where(recipient_id: @current_user.id)).includes(:sender, :recipient)
+    render json: messages, include: [:sender, :recipient]
   end
 
   private
