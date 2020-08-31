@@ -1,0 +1,27 @@
+<div class="content">
+
+  <h2>Login to GA-Chat!</h2>
+
+  <% if flash[:error] %>
+  <!-- print out any error messages from the controller -->
+  <br>
+  <strong>
+    <%= flash[:error] %>
+  </strong>
+  <br>
+  <br>
+  <% end %>
+
+  <hr>
+  <div class="form">
+  <%= form_tag login_path do %>
+    <%= label_tag :email %>
+    <%= email_field_tag :email %>
+    <%= label_tag :password %>
+    <%= password_field_tag :password %>
+  <hr>
+  <br>
+  <%= submit_tag 'Login' %>
+    <% end %>
+  </div>
+</div>
