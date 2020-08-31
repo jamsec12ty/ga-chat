@@ -1,0 +1,23 @@
+
+<h3>Edit Profile</h3>
+
+<%= form_for @user do |f| %>
+  <hr>
+  <p>
+    <strong>Name:</strong> <%= @user.name %>
+  </p>
+  <p>
+    <strong>Email: </strong><%= @user.email %>
+  </p>
+  <%= f.label :image, "Edit Profile Image" %>
+  <%= f.text_field :image %>
+  <br><br>
+
+  <hr>
+  <%= f.submit %>
+
+<% end %>
+
+
+<h1>Users#edit</h1>
+<p>Find me in app/views/users/edit.html.erb</p>

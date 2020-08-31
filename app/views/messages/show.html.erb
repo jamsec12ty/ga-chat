@@ -1,0 +1,17 @@
+<div class="message_window">
+  <div class="message_wrapper">
+    <ul>
+    <% @conversation_messages.each do |message| %>
+      <li>
+        <p><strong><%= message.sender.name %></strong></p>
+        <div class="message_item">
+          <p><%= message.content %></p>
+        </div>
+      </li>
+    <% end %>
+    </ul>
+  </div>
+
+  <%= render partial: "form" %>
+
+</div>
