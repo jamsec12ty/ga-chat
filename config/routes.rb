@@ -1,13 +1,19 @@
 Rails.application.routes.draw do
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  # ----------------------- Root ----------------------- #
   root to: 'session#new'
   get "/login" => "session#new"
 
-    # Session routes
+
+  # ----------------------- Session ----------------------- #
   get "/login" => "session#new" # Login form
   post "/login" => "session#create" # Form submits here, do authentication & create session, redirect or show form with errors
   delete "/login" => "session#destroy" # Logout, delete session
 
+  # ----------------------- Users ----------------------- #
   resources :users
+
+  # ----------------------- Messages ----------------------- #
+  resources :messages
+
 end

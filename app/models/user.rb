@@ -10,19 +10,28 @@ class User < ApplicationRecord
   has_many :friends_request_confirmed, -> {merge(Friendship.friends)}, through: :request_received, source: :user
 
   def friends
-    (friends_sent_confirmed.all + friends_request_confirmed.all).uniq
+    (friends_sent_confirmed + friends_request_confirmed).uniq.sort_by(&:created_at)
   end
 
   # Unconfirmed friend requests
   has_many :pending_requests, -> {merge(Friendship.pending_friends)}, through: :request_sent, source: :friend
   has_many :received_requests, -> {merge(Friendship.pending_friends)}, through: :request_received, source: :user
 
-  # ------------------------ Messages ----------------------- #
+  # ------------------------ Message ----------------------- #
+  # Get messages
   has_many :sent_messages, class_name: "Message", foreign_key: "sender_id", inverse_of: "sender", dependent: :destroy
   has_many :received_messages, class_name: "Message", foreign_key: "recipient_id", inverse_of: "recipient", dependent: :destroy
 
   def all_messages
-    sent_messages + received_messages
+    (sent_messages + received_messages).sort_by(&:created_at)
+  end
+
+  # Get messaged friends
+  has_many :sent_messages_friends, -> {merge(User.all)}, through: :sent_messages, source: :recipient
+  has_many :received_messages_friends, -> {merge(User.all)}, through: :received_messages, source: :sender
+
+  def all_messaged_friends
+    (sent_messages_friends + received_messages_friends).uniq.sort_by(&:created_at)
   end
 
   # ---------------------- Validations ---------------------- #
