@@ -13,8 +13,6 @@ class MessagesController < ApplicationController
   def index
     @messaged_friends = @current_user.all_messaged_friends
 
-    @recipient_id = @messaged_friends.first.id
-    
   end
   
   def show
