@@ -1,4 +1,7 @@
 class MessagesController < ApplicationController
+
+  before_action :check_if_logged_in
+
   def new
   end
 
@@ -29,6 +32,10 @@ class MessagesController < ApplicationController
   end
 
   def destroy
+  end
+
+  def message_search
+    render json: Message.where(sender_id: @current_user.id).or(Message.where(recipient_id: @current_user.id))
   end
 
   private

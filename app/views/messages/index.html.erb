@@ -1,6 +1,13 @@
 <h1>Messages</h1>
 
 <nav class="message_nav">
+  <div class="message_search_wrapper">
+    <form class="message_search_form">
+      <input type="text" class="message_search_text" />
+      <button class="message_search_button">Search</button>
+    </form>
+    <div class="message_results"></div>    
+  </div>
   <% if @messaged_friends.present? %>
     <ul class="message_list">
       <% @messaged_friends.each do |friend| %>
@@ -20,14 +27,22 @@
     </ul>
   <% end %>
   <div class="start_conversation">
-    <button calss="message_friends">Message</button>
+    <button class="show_friends">Message</button>
   </div>
 </nav>
 
 <div class="message_window">
 </div>
 
-<div class="message_friends_list">
+<div class="message_friends_list hide">
+  <button class="hide_friends">Cancel</button>
+  <h4>Sent a message to a friend:</h4>
+  <ul>
+  <% @current_user.friends.each do |friend| %>
+    <li><h3><%=link_to friend.name, message_path(friend.id) %></h3></li>
+  <% end %>
+  </ul>
 </div>
 
 <hr/>
+
