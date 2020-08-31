@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :friends_sent_confirmed, -> {merge(Friendship.friends)}, through: :request_sent, source: :friend
   has_many :friends_request_confirmed, -> {merge(Friendship.friends)}, through: :request_received, source: :user
 
-  def friends 
+  def friends
     (friends_sent_confirmed + friends_request_confirmed).uniq.sort_by(&:created_at)
   end
 
@@ -34,8 +34,9 @@ class User < ApplicationRecord
     (sent_messages_friends + received_messages_friends).uniq.sort_by(&:created_at)
   end
 
-  # ---------------------- Validation ---------------------- #
+  # ---------------------- Validations ---------------------- #
   has_secure_password
-  validates :name, presence: true
+  validates :name, presence: true, length: { minimum: 2, maximum: 30 }
   validates :email, presence: true, uniqueness: true
+    validates :password, length: { minimum: 6, maximum: 16}, on: :create
 end
