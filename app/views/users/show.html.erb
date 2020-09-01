@@ -16,3 +16,21 @@
 <p>
 <%= link_to "Edit profile", edit_user_path %>
 </p>
+
+<% if @current_user.friends.include? @user %>
+<%= button_to "Message", message_path(@user.id), method: :get %>
+
+<% elsif @current_user.pending_requests.include? @user %>
+    <p>Waiting for Approval</p>
+<% elsif @current_user.received_requests.include? @user %>
+
+<%= button_to "Accept", user_friend_path(@user.id, @current_user.id), method: :put %>
+
+<% else %>
+
+<%= button_to "Add Friend", user_friends_path(@user.id), method: :post %>
+
+<% end %>
+
+<p> <%= link_to "Edit Profile", edit_user_path %>
+
