@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       @user = User.create user_params
       if @user.persisted?
         session[:user_id] = @user.id #log in the newly created account automatically!
-        redirect_to messages_path
+        redirect_to user_friends_path(@user.id)
       else
         render :new
       end #else
