@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       @user = User.create user_params
       if @user.persisted?
         session[:user_id] = @user.id #log in the newly created account automatically!
-        redirect_to messages_path
+        redirect_to user_friends_path(@user.id)
       else
         render :new
       end #else
@@ -56,12 +56,9 @@ class UsersController < ApplicationController
     end
 
     def user_search
-      render json: User.where(name: params[:query])
+      render json: User.where("name ILIKE ?", "%#{params[:query]}%")
     end
 
-
-
-    ############################################
     private
 
     def user_params
