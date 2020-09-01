@@ -23,7 +23,7 @@ $(document).ready(function () {
       const searchURL = `/messages/search`;
       const string = query.replace(/(\s+)/, "(<[^>]+>)*$1(<[^>]+>)*");
       const pattern = new RegExp("(" + string + ")", "gi");
-      
+
       $.getJSON(searchURL)
       .done(data => {
         $('.message_search_text').val('');
@@ -57,6 +57,7 @@ $(document).ready(function () {
   });
 
 
+
   $('.user_search_form').on('submit', function(ev){
     ev.preventDefault(); // stop form from submitting
 
@@ -80,6 +81,7 @@ $(document).ready(function () {
     });
 
 
+
   };
 
   const displaySearchResults = (results) => {
@@ -93,10 +95,21 @@ $(document).ready(function () {
     // Display each result on the page:
     results.forEach( user => {
       $results.append(`<a href = '/users/${user.id}'>${user.name}</a>`);
-
     });
 
+    if ($('.user_results').html() === '') {
+      $('.user_results').append(
+        `<h4>No matching results.</h4>`
+      )
+    } else {
+      $('.user_results').prepend(`<button class="user_search_back">Back</button>`)
+    }
+
   }; // displaySearchResults()
+
+  $(document).on('click', '.user_search_back', function(){
+    $('.user_results').empty();
+  });
 
   $('.pending_requests_tab').on('click', function(){
     console.log("clicked");

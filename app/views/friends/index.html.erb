@@ -1,4 +1,4 @@
-<h1>My Friends</h1>
+<h1>Search Friends</h1>
 
 <div class="user_search_wrapper">
    <form class="user_search_form">
@@ -8,11 +8,16 @@
    <div class="user_results"></div>
  </div>
 
- <ul>
- <% @friends.each do |friend| %>
-   <li>
-     <%= link_to friend.name, user_path(friend.id) %>
-     <%= button_to "Message", message_path(friend.id), method: :get %>
-   </li>
- <% end %>
- </ul>
+<% if @friends.present? %>
+  <ul>
+    <% @friends.each do |friend| %>
+    <li>
+      <%= link_to friend.name, user_path(friend.id) %>
+      <%= button_to "Message", message_path(friend.id), method: :get %>
+    </li>
+    <% end %>
+  </ul>
+
+  <% else %>
+  <p>Find Your Friends and Start Messaging!</p>
+<% end %>
