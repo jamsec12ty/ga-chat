@@ -35,6 +35,7 @@ class MessagesController < ApplicationController
 
   def message_search
     messages = Message.where(sender_id: @current_user.id).or(Message.where(recipient_id: @current_user.id)).includes(:sender, :recipient)
+    
     render json: messages, include: [:sender, :recipient]
   end
 
