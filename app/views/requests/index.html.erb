@@ -1,0 +1,41 @@
+<h1>My Requests</h1>
+
+<div class="requests_tab">
+<ul>
+  <li><p class="pending_requests_tab">Pending Requests</p></li>
+  <li><p class="received_requests_tab">Received Requests</p></li>
+</ul>
+
+<div class="pending_requests show">
+  <h2>Pending Request</h2>
+    <% if @current_user.pending_requests.exists? %>
+
+      <ul>
+        <% @current_user.pending_requests.each do |friend|  %>
+        <li>
+          <%=link_to friend.name, user_path(friend.id)%>
+        </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No Pending Requests</p>
+    <% end %>
+</div>
+
+<div class="received_requests hide">
+  <h2>Received Request</h2>
+    <% if @current_user.received_requests.exists? %>
+
+      <ul>
+        <% @current_user.received_requests.each do |friend|  %>
+        <li>
+          <%=link_to friend.name, user_path(friend.id)%>
+        </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>You do not have any Friend Requests</p>
+    <% end %>
+</div>
+
+</div>

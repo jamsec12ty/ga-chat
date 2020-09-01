@@ -1,0 +1,18 @@
+<h1>My Friends</h1>
+
+<div class="user_search_wrapper">
+   <form class="user_search_form">
+     <input type="text" class="user_search_text" />
+     <button class="user_search_button">Search</button>
+   </form>
+   <div class="user_results"></div>
+ </div>
+
+ <ul>
+ <% @friends.each do |friend| %>
+   <li>
+     <%= link_to friend.name, user_path(friend.id) %>
+     <%= button_to "Message", message_path(friend.id), method: :get %>
+   </li>
+ <% end %>
+ </ul>

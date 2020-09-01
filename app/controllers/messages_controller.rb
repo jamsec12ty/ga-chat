@@ -13,10 +13,10 @@ class MessagesController < ApplicationController
   def index
     @messaged_friends = @current_user.all_messaged_friends
 
-    @recipient_id = @messaged_friends.first.id
     
+
   end
-  
+
   def show
     @recipient_id = params[:id]
     @conversation_messages = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, @recipient_id]) + Message.where(["sender_id = ? and recipient_id = ?", @recipient_id, @current_user.id])).sort_by(&:created_at)
