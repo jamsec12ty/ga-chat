@@ -1,38 +1,38 @@
 require 'test_helper'
 
-class FriendshipsControllerTest < ActionDispatch::IntegrationTest
+class FriendsControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
-    get friendships_new_url
+    get friends_new_url
     assert_response :success
   end
 
   test "should get create" do
-    get friendships_create_url
+    get friends_create_url
     assert_response :success
   end
 
   test "should get index" do
-    get friendships_index_url
+    get friends_index_url
     assert_response :success
   end
 
   test "should get show" do
-    get friendships_show_url
+    get friends_show_url
     assert_response :success
   end
 
   test "should get edit" do
-    get friendships_edit_url
+    get friends_edit_url
     assert_response :success
   end
 
   test "should get update" do
-    get friendships_update_url
+    get friends_update_url
     assert_response :success
   end
 
   test "should get destroy" do
-    get friendships_destroy_url
+    get friends_destroy_url
     assert_response :success
   end
 

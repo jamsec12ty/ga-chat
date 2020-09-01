@@ -42,8 +42,11 @@ class UsersController < ApplicationController
     end
 
 
-
     def destroy
+    end
+
+    def user_search
+      render json: User.where(name: params[:query])
     end
 
 

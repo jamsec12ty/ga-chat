@@ -10,3 +10,18 @@
 <p>
 <strong>Profile Image: </strong><%= @user.image %>
 </p>
+
+<% if @current_user.friends.include? @user %>
+<%= button_to "Message", message_path(@user.id), method: :get %>
+
+<% elsif @current_user.pending_requests.include? @user %>
+    <p>Waiting for Approval</p>
+<% elsif @current_user.received_requests.include? @user %>
+
+<%= button_to "Accept" %>
+
+<% else %>
+
+<%= button_to "Add Friend" %>
+
+<% end %>

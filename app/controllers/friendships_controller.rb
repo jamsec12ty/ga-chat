@@ -1,6 +1,6 @@
 class FriendshipsController < ApplicationController
 
-  # before_action :check_if_logged_in
+  before_action :check_if_logged_in
 
   # CREATE
 
@@ -18,8 +18,7 @@ class FriendshipsController < ApplicationController
   # READ
 
   def index
-    @friendships = Friendship.all
-    @users = User.all
+    @friends = @current_user.friends
   end
 
   def show
@@ -48,7 +47,7 @@ class FriendshipsController < ApplicationController
 
   private
   def friendship_params
-    params.require(:friendship).permit(:user_id, :friend_id, :status)
+    params.require(:friendship).permit(:user_id, :friend_id, :status, :search)
 
   end
 end #

@@ -1,9 +1,0 @@
-<h2>All Friendships</h2>
-
-<ul>
-<% @friendships.each do |friendship| %>
-  <li>
-    <%= link_to friendship.user_id, friendship_path(friendship.id) %>
-  </li>
-<% end %>
-</ul>

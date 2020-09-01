@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-
   # ----------------------- Root ----------------------- #
   root to: 'session#new'
   get "/login" => "session#new"
@@ -12,6 +11,7 @@ Rails.application.routes.draw do
   delete "/login" => "session#destroy" # Logout, delete session
 
   # ----------------------- Users ----------------------- #
+  get "/users/search/:query" => "users#user_search"
   resources :users
 
   # ----------------------- Messages ----------------------- #
@@ -19,6 +19,10 @@ Rails.application.routes.draw do
 
   # ----------------------- Friendships ----------------------- #
   resources :friendships
+
+  # ----------------------- Friends ----------------------- #
+
+  resources :friends
 
 
 end
