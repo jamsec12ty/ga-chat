@@ -13,6 +13,7 @@
       <ul>
         <% @current_user.pending_requests.each do |friend|  %>
         <li>
+          <%= check_user_image_small(friend) %>
           <%=link_to friend.name, user_path(friend.id)%>
         </li>
         <% end %>
@@ -29,6 +30,7 @@
       <ul>
         <% @current_user.received_requests.each do |friend|  %>
         <li>
+          <%= check_user_image_small(friend) %>
           <%=link_to friend.name, user_path(friend.id)%>
         </li>
         <% end %>

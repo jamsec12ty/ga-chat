@@ -13,6 +13,7 @@
       <% @messaged_friends.each do |friend| %>
         <li>
           <%= link_to message_path(friend.id) do %>
+            <%= check_user_image_small(friend) %>
             <h3><%= friend.name %></h3>
             <% last_message = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, friend.id]) + Message.where(["sender_id = ? and recipient_id = ?", friend.id, @current_user.id])).sort_by(&:created_at).last %>
             <% if last_message.created_at > Time.now.beginning_of_day %>
@@ -42,7 +43,10 @@
     <h4>Send a message to a friend:</h4>
     <ul>
     <% @current_user.friends.each do |friend| %>
-      <li><h3><%=link_to friend.name, message_path(friend.id) %></h3></li>
+      <li>
+        <%= check_user_image_small(friend) %>
+        <h3><%=link_to friend.name, message_path(friend.id) %></h3>
+      </li>
     <% end %>
     </ul>
   <% else %>

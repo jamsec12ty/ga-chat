@@ -3,6 +3,7 @@
     <ul>
     <% @conversation_messages.each do |message| %>
       <li>
+        <%= check_user_image_small(message.sender) %>
         <p><strong><%= message.sender.name %></strong></p>
         <div class="message_item">
           <p><%= message.content %></p>

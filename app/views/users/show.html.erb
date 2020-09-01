@@ -9,9 +9,9 @@
 </p>
 <p>
 <strong>Profile Image: </strong>
-<% if @user.image.present? %>
-<%= image_tag @user.image %>
-<% end %>
+<div class="user_avatar">
+  <%= check_user_image_large(@user) %>
+</div>
 </p>
 
 <% if @user.id === @current_user.id %>

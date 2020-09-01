@@ -86,7 +86,9 @@ $(document).ready(function () {
     $results.empty();
     // Display each result on the page:
     results.forEach( user => {
-      $results.append(`<p><a href = '/users/${user.id}'>${user.name}</a></p>`);
+      $results.append(`
+      <p><a href = '/users/${user.id}'>${user.name}</a></p>
+      `);
     });
 
     if ($('.user_results').html() === '') {
