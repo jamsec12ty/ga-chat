@@ -21,8 +21,8 @@
           <% if @current_user.present? %>
           <li><%= @current_user.name %></li>
           <li><%= link_to "Messages", messages_path %></li>
-          <li>Friends</li>
-          <li>Requests</li>
+          <li><%= link_to "Friends", user_friends_path(@current_user) %></li>
+          <li><%= link_to "Requests", user_requests_path(@current_user) %></li>
           <li><%= link_to 'Profile', user_path(@current_user) %></li>
           <li><%= link_to 'Logout', login_path, method: 'delete' %></li>
           <% else %>
