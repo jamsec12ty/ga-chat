@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'requests/index'
   # ----------------------- Root ----------------------- #
   root to: 'session#new'
   get "/login" => "session#new"
@@ -12,17 +13,17 @@ Rails.application.routes.draw do
 
   # ----------------------- Users ----------------------- #
   get "/users/search/:query" => "users#user_search"
-  resources :users
+  resources :users do
+    # ----------------------- Friends ----------------------- #
+    resources :friends
+    # ----------------------- Requests ----------------------- #
+    resources :requests
+  end
 
   # ----------------------- Messages ----------------------- #
   resources :messages
 
-  # ----------------------- Friendships ----------------------- #
-  resources :friendships
 
-  # ----------------------- Friends ----------------------- #
-
-  resources :friends
 
 
 end

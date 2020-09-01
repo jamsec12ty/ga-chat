@@ -5,14 +5,12 @@ class FriendshipsController < ApplicationController
   # CREATE
 
   def new
-    @friendships = Friendship.all
-    @friendship = Friendship.new
-    @users = User.all
+
   end
 
   def create
     Friendship.create friendship_params
-    redirect_to friendships_path
+    redirect_to friends_path
   end
 
   # READ
@@ -47,7 +45,7 @@ class FriendshipsController < ApplicationController
 
   private
   def friendship_params
-    params.require(:friendship).permit(:user_id, :friend_id, :status, :search)
+    params.require(:friendship).permit(:user_id, :friend_id, :status)
 
   end
 end #

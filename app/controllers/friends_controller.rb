@@ -4,14 +4,12 @@ class FriendsController < ApplicationController
   # CREATE
 
   def new
-    @friends = Friendship.all
-    @friend = Friendship.new
-    @users = User.all
   end
 
   def create
-    Friendship.create friend_params
-    redirect_to friends_path
+    # raise "hell"
+    Friendship.create(user_id: @current_user.id, friend_id: params[:user_id], status: "pending" )
+    redirect_to user_path(params[:user_id])
   end
 
   # READ
@@ -27,14 +25,15 @@ class FriendsController < ApplicationController
   # UPDATE
 
   def edit
-    @friend = Friendship.find params[:id]
+    @friendship = Friendship.where(user_id: params[:user_id], friend_id: @current_user.id)
   end
 
   def update
-    friend = Friendship.find params[:id]
-    Friendship.update friend_params
+    @friendship = Friendship.where(user_id: params[:user_id], friend_id: @current_user.id)
 
-    redirect_to( friend_path(params[:id]) )
+    @friendship.update(status: "confirmed")
+
+    redirect_to user_path(params[:user_id])
   end
 
   # DELETE
@@ -44,9 +43,4 @@ class FriendsController < ApplicationController
     redirect_to friends_path
   end
 
-  private
-  def friend_params
-    params.require(:friend).permit(:user_id, :friend_id, :status, :search)
-
-  end
 end #

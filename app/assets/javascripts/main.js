@@ -39,10 +39,21 @@ $(document).ready(function () {
     // Display each result on the page:
     results.forEach( user => {
       $results.append(`<a href = '/users/${user.id}'>${user.name}</a>`);
-      
+
     });
 
   }; // displaySearchResults()
 
+  $('.pending_requests_tab').on('click', function(){
+    console.log("clicked");
+    $('.pending_requests').show();
+    $('.received_requests').hide();
+  });
+
+  $('.received_requests_tab').on('click', function(){
+    console.log("clicked");
+    $('.pending_requests').hide();
+    $('.received_requests').show();
+  });
 
 });
