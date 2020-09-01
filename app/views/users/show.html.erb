@@ -8,7 +8,13 @@
 <strong>Email: </strong><%= @user.email %>
 </p>
 <p>
-<strong>Profile Image: </strong><%= @user.image %>
+<strong>Profile Image: </strong>
+<% if @user.image.present? %>
+<%= image_tag @user.image %>
+<% end %>
+</p>
+<p>
+<%= link_to "Edit profile", edit_user_path %>
 </p>
 
 <% if @current_user.friends.include? @user %>
