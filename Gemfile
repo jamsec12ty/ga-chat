@@ -55,3 +55,5 @@ gem 'pry-byebug'
 gem 'pry-rails'
 
 gem 'jquery-rails'
+
+gem 'cloudinary'

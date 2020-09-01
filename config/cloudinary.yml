@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: dsv0a2eu2
+  api_key: '578932123924359'
+  api_secret: xHLEA2DlpTEszV4DLSKjBeKUFpg
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: dsv0a2eu2
+  api_key: '578932123924359'
+  api_secret: xHLEA2DlpTEszV4DLSKjBeKUFpg
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: dsv0a2eu2
+  api_key: '578932123924359'
+  api_secret: xHLEA2DlpTEszV4DLSKjBeKUFpg
+  enhance_image_tag: true
+  static_file_support: false

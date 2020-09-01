@@ -56,37 +56,29 @@ $(document).ready(function () {
     $('.message_results').empty();
   });
 
-
-
   $('.user_search_form').on('submit', function(ev){
     ev.preventDefault(); // stop form from submitting
-
+    
     const query = $('.user_search_text').val();
     getSearchResults(query);
     console.log(query);
   });
 
   const getSearchResults = function(queryText) {
-    console.log('getSearchResults():',queryText);
-
     // Perform AJAX request
     $.getJSON(`/users/search/${queryText}`, {
       name: queryText
       })
       .done(function (data) {
+        $(".user_search_text").val("");
         console.log(data);
         displaySearchResults(data);
       }).fail(function (err) {
         return console.warn(err);
     });
-
-
-
   };
 
   const displaySearchResults = (results) => {
-    console.log('displaySearchResults():', results);
-
     // Save a reference to the results div DOM node
     // so we're not querying the DOM in each iteration
     // of the loop (there are 100 iterations!)
@@ -94,7 +86,7 @@ $(document).ready(function () {
     $results.empty();
     // Display each result on the page:
     results.forEach( user => {
-      $results.append(`<a href = '/users/${user.id}'>${user.name}</a>`);
+      $results.append(`<p><a href = '/users/${user.id}'>${user.name}</a></p>`);
     });
 
     if ($('.user_results').html() === '') {
