@@ -2,8 +2,10 @@
 
 <%= form_for @user, html: {multipart: true} do |f| %>
   <hr>
-  <p><strong>Name:</strong> <%= @user.name %></p>
-  <p><strong>Email: </strong><%= @user.email %></p>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
   <%= f.label :image, "Edit Profile Image:" %>
   <%= f.cl_image_upload :image %>
   <br><br>

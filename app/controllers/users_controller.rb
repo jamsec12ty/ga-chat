@@ -51,6 +51,7 @@ class UsersController < ApplicationController
       response = Cloudinary::Uploader.upload params[:file]
       @user.image = response['public_id']
       @user.save
+      # raise "hell"
       @user.update user_params
     end
     redirect_to user_path(@user)
