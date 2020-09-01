@@ -55,3 +55,4 @@ gem 'pry-byebug'
 gem 'pry-rails'
 
 gem 'jquery-rails'
+gem 'redis', '~> 3.3.5'

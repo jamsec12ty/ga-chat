@@ -21,7 +21,9 @@ Rails.application.routes.draw do
 
   # ----------------------- Messages ----------------------- #
   get "/messages/search" => "messages#message_search"
-  
+
   resources :messages
+
+
 
 end
