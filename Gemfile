@@ -55,5 +55,3 @@ gem 'pry-byebug'
 gem 'pry-rails'
 
 gem 'jquery-rails'
-
-gem 'letter_avatar'
