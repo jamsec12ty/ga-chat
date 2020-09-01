@@ -39,8 +39,9 @@ class FriendsController < ApplicationController
   # DELETE
 
   def destroy
-    Friendship.destroy params[:id]
-    redirect_to friends_path
+    @friendship = Friendship.where(user_id: @current_user.id, friend_id: params[:user_id]).or(Friendship.where(user_id: params[:user_id], friend_id: @current_user.id))
+    @friendship.destroy_all
+    redirect_to user_friends_path(@current_user.id)
   end
 
 end #
