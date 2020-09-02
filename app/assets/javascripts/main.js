@@ -47,11 +47,9 @@ $(document).ready(function () {
           )
         }
           $('.message_results').prepend(`<button class="message_search_back">Back</button>`)
-
       })
       .fail(error => console.log(error))
     }
-
   });
 
   $(document).on('click', '.message_search_back', function(){
@@ -60,13 +58,54 @@ $(document).ready(function () {
     $('.message_search_text').focus()
   });
 
+  // Show message window
+  let recipientId;
   $(".message_list_item").on('click', (e) => {
     $(".message_window").empty();
-    // const query = e.target.parent().attr('id');
-    console.log(this);
-    console.log(e.target);
-    // $.getJSON(`/users/search/${query}`);
-  })
+    const query = e.currentTarget.id;
+    recipientId = query; // Save the last clicked user id, for using when sending message
+    console.log(e.currentTarget.id);
+    $.getJSON(`messages/show/${query}`)
+    .done( data => {
+      console.log(data);
+      data.forEach(message => {
+        $('.message_window').append(`
+        <li>
+          <p><strong>${message.sender.name}</strong></p>
+          <div class="message_item">
+            <p>${message.content}</p>
+          </div>
+          <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+        </li>
+        `)
+      })
+    }).fail(error => console.log(error));
+  });
+
+  $('.message_send_form').on('submit', (e) => {
+    e.preventDefault();
+    const message = $('.message_send_text').val();
+    console.log(message);
+    console.log("Recipient ID:", recipientId);
+    $.post(`/messages`, {
+      recipient_id: recipientId,
+      content: message
+    })
+    .done(message => {
+      console.log(message);
+      $('.message_window').append(`
+      <li>
+        <p><strong>${message.sender.name}</strong></p>
+        <div class="message_item">
+          <p>${message.content}</p>
+        </div>
+        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+      </li>
+      `)
+    })
+    .fail(error => console.log(error))
+    $('.message_send_text').val('');
+  });
 
   /* --------------------- User Search -------------------- */
 
@@ -110,14 +149,12 @@ $(document).ready(function () {
       )
     }
       $('.user_results').prepend(`<button class="user_search_back">Back</button>`)
-
   }; // displaySearchResults()
 
   $(document).on('click', '.user_search_back', function(){
     $('.user_results').empty();
     $('.user_search_text').val('');
     $('.user_search_text').focus()
-
   });
 
   /* -------------------- Requests Tab -------------------- */

@@ -23,10 +23,8 @@ Rails.application.routes.draw do
   # ----------------------- Messages ----------------------- #
   get "/messages/search" => "messages#message_search"
   get "/messages/show/:query" => "messages#message_show"
+  post "/messages" => "messages#create"
   
-
   resources :messages
-
-
 
 end

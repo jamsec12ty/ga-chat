@@ -6,16 +6,16 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.create message_params
+    @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id
     # if @message.persisted?
-    @current_user.sent_messages << @message
+    # @current_user.sent_messages << @message
     # end
-    redirect_to(message_path(message_params[:recipient_id]))
+    # redirect_to(message_path(message_params[:recipient_id]))
+    render json: @message, include: [:sender, :recipient]
   end
 
   def index
     @messaged_friends = @current_user.all_messaged_friends
-
   end
 
   def show
