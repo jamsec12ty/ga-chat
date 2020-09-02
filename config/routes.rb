@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # ----------------------- Users ----------------------- #
   get "/users/search/:query" => "users#user_search"
+
   resources :users do
     # ----------------------- Friends ----------------------- #
     resources :friends
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
 
   # ----------------------- Messages ----------------------- #
   get "/messages/search" => "messages#message_search"
+  get "/messages/show/:query" => "messages#message_show"
   
   resources :messages
 

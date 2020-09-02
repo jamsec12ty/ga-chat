@@ -11,8 +11,9 @@
   <% if @messaged_friends.present? %>
     <ul class="message_list">
       <% @messaged_friends.each do |friend| %>
-        <li>
-          <%= link_to message_path(friend.id) do %>
+        <div class="message_list_item" id=<%= friend.id %>>
+          <li>
+          <!--# <%= link_to message_path(friend.id) do %> -->
             <%= check_user_image_small(friend) %>
             <h3><%= friend.name %></h3>
             <% last_message = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, friend.id]) + Message.where(["sender_id = ? and recipient_id = ?", friend.id, @current_user.id])).sort_by(&:created_at).last %>
@@ -22,8 +23,9 @@
               <p><%= last_message.created_at.strftime("%e %b %Y") %></p>
             <% end %>
             <p><%= last_message.content %></p>
-          <% end %>
-        </li>
+          <!-- <% end %> -->
+          </li>
+        </div>
       <% end %>
     </ul>
   <% else %>

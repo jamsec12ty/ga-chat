@@ -1,6 +1,8 @@
 $(document).ready(function () {
   console.log('Testing');
 
+  /* ------------------- Message Search ------------------- */
+
   $('.show_friends').on('click', function(){
     $('.message_friends_list').show();
   });
@@ -56,9 +58,18 @@ $(document).ready(function () {
     $('.message_results').empty();
   });
 
+  $(".message_list_item").on('click', (e) => {
+    $(".message_window").empty();
+    // const query = e.target.parent().attr('id');
+    console.log(this);
+    console.log(e.target);
+    // $.getJSON(`/users/search/${query}`);
+  })
+
+  /* --------------------- User Search -------------------- */
+
   $('.user_search_form').on('submit', function(ev){
     ev.preventDefault(); // stop form from submitting
-    
     const query = $('.user_search_text').val();
     getSearchResults(query);
     console.log(query);
@@ -104,6 +115,8 @@ $(document).ready(function () {
   $(document).on('click', '.user_search_back', function(){
     $('.user_results').empty();
   });
+
+  /* -------------------- Requests Tab -------------------- */
 
   $('.pending_requests_tab').on('click', function(){
     console.log("clicked");

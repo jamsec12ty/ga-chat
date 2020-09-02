@@ -40,6 +40,12 @@ class MessagesController < ApplicationController
     render json: messages, include: [:sender, :recipient]
   end
 
+  def message_show
+    messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient)
+    
+    render json: messages, include: [:sender, :recipient]
+  end
+
   private
 
   def message_params
