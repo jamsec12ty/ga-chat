@@ -22,12 +22,9 @@ Rails.application.routes.draw do
 
   # ----------------------- Messages ----------------------- #
   get "/messages/search" => "messages#message_search"
-<<<<<<< HEAD
   get "/messages/show/:query" => "messages#message_show"
   
-=======
 
->>>>>>> e65967197121743fd9c8a507fca39b11c768a21f
   resources :messages
 
 
