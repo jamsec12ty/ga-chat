@@ -26,12 +26,9 @@ class MessagesController < ApplicationController
 
   end
 
-
-
-
   def index
-    # raise "hell"
-    @messaged_friends = @current_user.all_messaged_friends
+    # @messaged_friends = @current_user.all_messaged_friends
+    @friends = @current_user.friends
 
     # @message = Message.new
   end
@@ -64,17 +61,16 @@ class MessagesController < ApplicationController
     render json: messages, include: [:sender, :recipient]
   end
 
-  def conversation_create
-    @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id
-    # p @message.errors.full_messages
-    if @message.save
-      # JavaScript is listening for messages broadcast to this user's channel
-      # in the file app/assets/javascripts/channels/messages.js
-      ActionCable.server.broadcast "messages_#{params[:recipient_id]}",
-        message: @message,
-        user: @message.sender
-    end    
-  end
+  # def conversation_create
+  #   raise "hell"
+  #   @user = User.find params[:friendId]
+  #   @current_user.all_messaged_friends << @user
+  #   if @user.save
+  #     ActionCable.server.broadcast "conversations",
+  #       user: @user
+  #   end
+  #   render json: @user
+  # end
 
   private
 

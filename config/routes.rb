@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  mount ActionCable.server => '/cable'
-
   get 'requests/index'
   # ----------------------- Root ----------------------- #
   root to: 'session#new'
@@ -31,5 +29,7 @@ Rails.application.routes.draw do
   
   resources :messages
   post "/messages" => "messages#create"
+
+  post "/conversations" => "messages#conversation_create"
 
 end

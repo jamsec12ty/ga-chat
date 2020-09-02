@@ -143,6 +143,7 @@ $(document).ready(function () {
     $('.message_send_text').val('');
   });
 
+
   /* --------------------- User Search -------------------- */
 
   $('.user_search_form').on('submit', function(ev){
@@ -199,6 +200,19 @@ $(document).ready(function () {
     console.log(e.currentTarget.id);
     let id = e.currentTarget.id;
     localStorage.setItem('id', JSON.stringify(id));
+    // $.post(`/conversations`, {
+    //     friendId: id,
+    //   })
+    //   .done(user => {
+    //     $('.message_list').prepend(`
+    //       <div class=class="message_list_item" id=${user.id}>
+    //       <li>
+    //         <h3>${user.name}</h3>
+    //       </li>
+    //       </div>
+    //     `)
+    //   })
+    //   .fail(error => console.log(error))
   })
 
   /* -------------------- Requests Tab -------------------- */
