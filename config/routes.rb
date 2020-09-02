@@ -23,10 +23,11 @@ Rails.application.routes.draw do
   # ----------------------- Messages ----------------------- #
   get "/messages/search" => "messages#message_search"
   get "/messages/show/:query" => "messages#message_show"
-  
+
 
   resources :messages
 
-
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
 
 end

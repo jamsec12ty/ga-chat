@@ -5,13 +5,27 @@ class MessagesController < ApplicationController
   def new
   end
 
+
+  # def create
+  #   @message = Message.create message_params
+  #   if @message.persisted?
+  #   @current_user.sent_messages << @message
+  #   end
+  #   redirect_to(message_path(message_params[:recipient_id]))
+  # end
   def create
-    @message = Message.create message_params
-    # if @message.persisted?
-    @current_user.sent_messages << @message
-    # end
-    redirect_to(message_path(message_params[:recipient_id]))
+    message = Message.new(message_params)
+    message.sender_id = @current_user.id
+    if message.save
+      ActionCable.server.broadcast 'messages',
+        message: message.content,
+        user: message.sender.name
+      head :ok
+    end
   end
+
+
+
 
   def index
     @messaged_friends = @current_user.all_messaged_friends
@@ -36,13 +50,13 @@ class MessagesController < ApplicationController
 
   def message_search
     messages = Message.where(sender_id: @current_user.id).or(Message.where(recipient_id: @current_user.id)).includes(:sender, :recipient)
-    
+
     render json: messages, include: [:sender, :recipient]
   end
 
   def message_show
     messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient)
-    
+
     render json: messages, include: [:sender, :recipient]
   end
 
