@@ -92,7 +92,7 @@ $(document).ready(function () {
       content: message
     })
     .done(message => {
-      console.log(message);
+
       $('.message_window').append(`
       <li>
         <p><strong>${message.sender.name}</strong></p>
