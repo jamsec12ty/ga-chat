@@ -45,9 +45,9 @@ $(document).ready(function () {
           $('.message_results').append(
             `<h4>No matching results.</h4>`
           )
-        } else {
-          $('.message_results').prepend(`<button class="message_search_back">Back</button>`)
         }
+          $('.message_results').prepend(`<button class="message_search_back">Back</button>`)
+
       })
       .fail(error => console.log(error))
     }
@@ -56,6 +56,8 @@ $(document).ready(function () {
 
   $(document).on('click', '.message_search_back', function(){
     $('.message_results').empty();
+    $('.message_search_text').val('');
+    $('.message_search_text').focus()
   });
 
   $(".message_list_item").on('click', (e) => {
@@ -106,14 +108,16 @@ $(document).ready(function () {
       $('.user_results').append(
         `<h4>No matching results.</h4>`
       )
-    } else {
-      $('.user_results').prepend(`<button class="user_search_back">Back</button>`)
     }
+      $('.user_results').prepend(`<button class="user_search_back">Back</button>`)
 
   }; // displaySearchResults()
 
   $(document).on('click', '.user_search_back', function(){
     $('.user_results').empty();
+    $('.user_search_text').val('');
+    $('.user_search_text').focus()
+
   });
 
   /* -------------------- Requests Tab -------------------- */

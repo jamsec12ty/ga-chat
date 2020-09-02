@@ -21,11 +21,10 @@
       <div class="main_nav_item_wrapper">
         <ul class="main_nav_item">
           <% if @current_user.present? %>
-          <li><%= @current_user.name %></li>
+          <li><%= link_to @current_user.name, user_path(@current_user) %></li>
           <li><%= link_to "Messages", messages_path %></li>
           <li><%= link_to "Friends", user_friends_path(@current_user) %></li>
           <li><%= link_to "Requests", user_requests_path(@current_user) %></li>
-          <li><%= link_to 'Profile', user_path(@current_user) %></li>
           <li><%= link_to 'Logout', login_path, method: 'delete' %></li>
           <% else %>
           <li><%= link_to 'Login', login_path %></li>

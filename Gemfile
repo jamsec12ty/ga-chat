@@ -55,5 +55,9 @@ gem 'pry-byebug'
 gem 'pry-rails'
 
 gem 'jquery-rails'
+<<<<<<< HEAD
 
 gem 'cloudinary'
+=======
+gem 'redis', '~> 3.3.5'
+>>>>>>> e65967197121743fd9c8a507fca39b11c768a21f
