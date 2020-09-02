@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount ActionCable.server => '/cable'
+
   get 'requests/index'
   # ----------------------- Root ----------------------- #
   root to: 'session#new'
