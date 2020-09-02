@@ -36,7 +36,15 @@
   </div>
 </nav>
 
-<div class="message_window">
+<div class="message_window_wrapper">
+  <ul class="message_window" id=<%= @current_user.id %>>
+  </ul>
+  <div class="message_send_wrapper">
+    <form class="message_send_form">
+      <input type="text" class="message_send_text" />
+      <button class="message_end_button">Send</button>
+    </form>
+  </div>    
 </div>
 
 <div class="message_friends_list hide">

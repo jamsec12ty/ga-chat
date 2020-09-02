@@ -5,23 +5,25 @@ class MessagesController < ApplicationController
   def new
   end
 
-
-  # def create
-  #   @message = Message.create message_params
-  #   if @message.persisted?
-  #   @current_user.sent_messages << @message
-  #   end
-  #   redirect_to(message_path(message_params[:recipient_id]))
-  # end
+############################################################################
   def create
-    message = Message.new(message_params)
-    message.sender_id = @current_user.id
-    if message.save
-      ActionCable.server.broadcast 'messages',
-        message: message.content,
-        user: message.sender.name
-      head :ok
+    @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id
+    # p @message.errors.full_messages
+    if @message.save
+      # JavaScript is listening for messages broadcast to this user's channel
+      # in the file app/assets/javascripts/channels/messages.js
+      ActionCable.server.broadcast "messages_#{params[:recipient_id]}",
+        message: @message,
+        user: @message.sender
     end
+
+    # we respond to the ajax request with the created message object
+    # so that in the Ajax .done handler, we can append the created message
+    # to the sender's list of messages (the sender does not receive the broadcast
+    # over ActionCable because the broadcast is directed to the recipient's
+    # channel only).
+    render json: @message, include: [:sender, :recipient]
+
   end
 
 
@@ -29,7 +31,6 @@ class MessagesController < ApplicationController
 
   def index
     @messaged_friends = @current_user.all_messaged_friends
-
   end
 
   def show
