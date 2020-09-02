@@ -14,7 +14,7 @@
     <li>
       <%= check_user_image_small(friend) %>
       <%= link_to friend.name, user_path(friend.id) %>
-      <%= button_to "Message", message_path(friend.id), method: :get %>
+      <%= button_to "Message", messages_path(friend.id), class: "message_friends", id: friend.id, method: :get %>
     </li>
     <% end %>
   </ul>

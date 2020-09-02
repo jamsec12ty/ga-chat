@@ -30,9 +30,10 @@ class MessagesController < ApplicationController
 
 
   def index
+    # raise "hell"
     @messaged_friends = @current_user.all_messaged_friends
 
-    @message = Message.new
+    # @message = Message.new
   end
 
   def show
@@ -61,6 +62,18 @@ class MessagesController < ApplicationController
     messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient)
 
     render json: messages, include: [:sender, :recipient]
+  end
+
+  def conversation_create
+    @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id
+    # p @message.errors.full_messages
+    if @message.save
+      # JavaScript is listening for messages broadcast to this user's channel
+      # in the file app/assets/javascripts/channels/messages.js
+      ActionCable.server.broadcast "messages_#{params[:recipient_id]}",
+        message: @message,
+        user: @message.sender
+    end    
   end
 
   private

@@ -15,7 +15,5 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
       <p>${data.message.created_at.split('T').join(' ').substring(0, data.message.created_at.length - 5)}</p>
     </li>
     `)
-
   }
-
 });

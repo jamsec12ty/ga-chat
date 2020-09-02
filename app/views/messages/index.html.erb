@@ -29,18 +29,35 @@
       <% end %>
     </ul>
   <% else %>
-    <p>You don't have messages. Start a conversation below.</p>
+    <p>You don't have messages.</p>
   <% end %>
-  <div class="start_conversation">
+  <!--# <div class="start_conversation">
     <button class="show_friends">Message</button>
   </div>
+  <div class="message_friends_list hide">
+    <% if @current_user.friends.present? %>
+      <button class="hide_friends">Cancel</button>
+      <h4>Send a message to a friend:</h4>
+      <ul>
+      <% @current_user.friends.each do |friend| %>
+        <div class="message_list_item " id=<%= friend.id %>>
+          <li>
+            <%= check_user_image_small(friend) %>
+            <h3><%= friend.name %></h3>
+          </li>
+        </div>
+      <% end %>
+      </ul>
+    <% else %>
+      <p>You don't have friends.</p>
+    <% end %>
+  </div> -->
 </nav>
 
 <div class="message_window_wrapper">
   <ul class="message_window" id=<%= @current_user.id %>>
-    
   </ul>
-  <div class="message_send_wrapper">
+  <div class="message_send_wrapper hide">
     <form class="message_send_form">
       <input type="text" class="message_send_text" />
       <button class="message_end_button">Send</button>
@@ -48,21 +65,5 @@
   </div>    
 </div>
 
-<div class="message_friends_list hide">
-  <% if @current_user.friends.present? %>
-    <button class="hide_friends">Cancel</button>
-    <h4>Send a message to a friend:</h4>
-    <ul>
-    <% @current_user.friends.each do |friend| %>
-      <li>
-        <%= check_user_image_small(friend) %>
-        <h3><%=link_to friend.name, message_path(friend.id) %></h3>
-      </li>
-    <% end %>
-    </ul>
-  <% else %>
-    <p>You don't have friends.</p>
-  <% end %>
-</div>
 
-<hr/>
+

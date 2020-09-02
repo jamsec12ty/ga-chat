@@ -1,5 +1,40 @@
+// Check if Local Storage can be used
+let localStorageSaved = true;
+// If not available change to false
+if (localStorage === undefined) {
+  localStorageSaved = false;
+}
+
 $(document).ready(function () {
-  console.log('Testing');
+
+  let recipientId;
+
+  /* -------------------- Local Storage ------------------- */
+
+  if (localStorageSaved) {
+    if (localStorage.id !== undefined) {
+      console.log('localStorage', localStorage.id);
+      let query = JSON.parse(localStorage.getItem('id'));
+      console.log(query);
+      recipientId = query;
+      $.getJSON(`messages/show/${query}`)
+        .done(data => {
+          console.log(data);
+          data.forEach(message => {
+            $('.message_window').append(`
+        <li>
+          <p><strong>${message.sender.name}</strong></p>
+          <div class="message_item">
+            <p>${message.content}</p>
+          </div>
+          <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+        </li>
+        `)
+          })
+        }).fail(error => console.log(error));
+      $('.message_send_wrapper').show();
+    }
+  }
 
   /* ------------------- Message Search ------------------- */
 
@@ -59,11 +94,12 @@ $(document).ready(function () {
   });
 
   // Show message window
-  let recipientId;
-  $(".message_list_item").on('click', (e) => {
-    $(".message_window").empty();
+  $('.message_list_item').on('click', (e) => {
+    $('.message_window').empty();
+    $('.message_send_wrapper').show();
     const query = e.currentTarget.id;
-    recipientId = query; // Save the last clicked user id, for using when sending message
+    // Save the last clicked user id, for using when sending message
+    recipientId = query; 
     console.log(e.currentTarget.id);
     $.getJSON(`messages/show/${query}`)
     .done( data => {
@@ -82,6 +118,7 @@ $(document).ready(function () {
     }).fail(error => console.log(error));
   });
 
+  // Send message form
   $('.message_send_form').on('submit', (e) => {
     e.preventDefault();
     const message = $('.message_send_text').val();
@@ -92,7 +129,6 @@ $(document).ready(function () {
       content: message
     })
     .done(message => {
-
       $('.message_window').append(`
       <li>
         <p><strong>${message.sender.name}</strong></p>
@@ -156,6 +192,14 @@ $(document).ready(function () {
     $('.user_search_text').val('');
     $('.user_search_text').focus()
   });
+
+  /* -------------------- Message User -------------------- */
+
+  $('.message_friends').on('click', (e) => {
+    console.log(e.currentTarget.id);
+    let id = e.currentTarget.id;
+    localStorage.setItem('id', JSON.stringify(id));
+  })
 
   /* -------------------- Requests Tab -------------------- */
 
