@@ -16,7 +16,7 @@
         <li>
           <%= check_user_image_small(friend) %>
           <%= link_to friend.name, user_path(friend.id) %>
-          <h4 class="view_profile" id=<%= friend.id %>>View Profile</h4>
+          <p class="view_profile" id=<%= friend.id %>>View Profile</p>
           <%= button_to "Message", messages_path, class: "message_friends", id: friend.id, method: :get %>
         </li>
       </div>

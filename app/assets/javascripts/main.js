@@ -181,6 +181,7 @@ $(document).ready(function () {
     results.forEach( user => {
       $results.append(`
       <p><a href = '/users/${user.id}'>${user.name}</a></p>
+      <p class="view_profile" id=${user.id}>View Profile</p>
       `);
     });
 
@@ -219,7 +220,7 @@ $(document).ready(function () {
       .fail(error => console.log(error))
   })
 
-  $('.view_profile').on('click', (e) => {
+  $(document).on('click', '.view_profile', (e) => {
     $('.user_profile').empty();
     const query = e.currentTarget.id;
     console.log(query);
