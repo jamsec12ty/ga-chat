@@ -12,7 +12,7 @@
 <% if @friends.present? %>
     <ul>
       <% @friends.each do |friend| %>
-      <div class="friends_list_item" id=<%= friend.id %>>
+      <div class="friends_list_item" id=<%= friend.id %> style="border: none">
         <li>
           <%= check_user_image_small(friend) %>
           <%= link_to friend.name, user_path(friend.id) %>

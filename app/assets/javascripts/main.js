@@ -17,7 +17,7 @@ $(document).ready(function () {
       let query = JSON.parse(localStorage.getItem('id'));
       console.log(query);
       recipientId = query;
-
+      $(`#${query}`).addClass('selected');
       $.getJSON(`messages/show/${query}`)
         .done(data => {
           console.log(data);
@@ -99,7 +99,8 @@ $(document).ready(function () {
   $('.message_list_item').on('click', (e) => {
     $('.message_window').empty();
     $('.message_send_wrapper').show();
-    e.currentTarget.className += ' selected';
+    $(e.currentTarget).addClass('selected');
+    $(e.currentTarget).siblings().removeClass('selected');
     const query = e.currentTarget.id;
     // Save the last clicked user id, for using when sending message
     recipientId = query; 
