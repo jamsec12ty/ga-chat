@@ -143,8 +143,8 @@ $(document).ready(function () {
       </li>
       `)
       $(`.last_message_${recipientId}`).html(`
-        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
         <p>${message.content}</p>
+        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
       `)
     })
     .fail(error => console.log(error))
@@ -253,6 +253,8 @@ $(document).ready(function () {
     $.post(`/users/${friend_id}/friends`)
     .done(data => {
       console.log("Friendship create response:", data);
+      console.log($(this).text());
+      $(this).props('disabled', 'true');
     })
     .fail(error => console.log(error));
   });

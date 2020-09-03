@@ -224,3 +224,10 @@ label {
 .user_profile {
   margin-top: 40px;
 }
+
+.notification {
+  position: fixed;
+  right: 40px;
+  bottom: 20px;
+  z-index: 1000;
+} 
