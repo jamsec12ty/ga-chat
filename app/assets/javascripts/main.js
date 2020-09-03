@@ -39,6 +39,7 @@ $(document).ready(function () {
 
   /* ------------------- Message Search ------------------- */
 
+
   $('.show_friends').on('click', function(){
     $('.message_friends_list').show();
   });
@@ -160,18 +161,27 @@ $(document).ready(function () {
   });
 
   const getSearchResults = function(queryText) {
+    if (queryText.trim() === '') {
+      $('.user_results').empty();
+      return;
+    }
+
     // Perform AJAX request
     $.getJSON(`/users/search/${queryText}`, {
       name: queryText
       })
       .done(function (data) {
-        $(".user_search_text").val("");
         console.log(data);
         displaySearchResults(data);
       }).fail(function (err) {
         return console.warn(err);
     });
   };
+
+
+  $('.user_search_text').on('input', function() {
+    getSearchResults($(this).val());
+  });
 
   const displaySearchResults = (results) => {
     // Save a reference to the results div DOM node
