@@ -103,7 +103,7 @@ $(document).ready(function () {
     $(e.currentTarget).siblings().removeClass('selected');
     const query = e.currentTarget.id;
     // Save the last clicked user id, for using when sending message
-    recipientId = query; 
+    recipientId = query;
     console.log(e.currentTarget.id);
     $.getJSON(`messages/show/${query}`)
     .done( data => {
@@ -143,7 +143,7 @@ $(document).ready(function () {
       </li>
       `)
       $(`.last_message_${recipientId}`).html(`
-        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>        
+        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
         <p>${message.content}</p>
       `)
     })
@@ -245,6 +245,37 @@ $(document).ready(function () {
       })
     .fail(error => console.log(error));
   });
+
+
+  $("#add_friend").on('click', function(){
+    const friend_id = $(this).attr("friend_id");
+    console.log("add button clicked", friend_id);
+    $.post(`/users/${friend_id}/friends`)
+    .done(data => {
+      console.log("Friendship create response:", data);
+    })
+    .fail(error => console.log(error));
+  });
+
+  $("#accept_friend").on('click', function(){
+    const friend_id = $(this).attr("friend_id");
+    const current_user_id = $(this).attr("current_user_id");
+    console.log("accept button clicked", friend_id);
+    $.ajax({
+       type: 'PATCH',
+       url: `/users/${friend_id}/friends/${current_user_id}`,
+       // data: JSON.stringify(patch),
+       processData: false,
+       contentType: 'application/merge-patch+json',
+       /* success and error handling omitted for brevity */
+    })
+    // $.post(`/users/${friend_id}/friends/${current_user_id}`)
+    .done(data => {
+      console.log("Friendship create response:", data);
+    })
+    .fail(error => console.log(error));
+  });
+
 
   /* -------------------- Requests Tab -------------------- */
 

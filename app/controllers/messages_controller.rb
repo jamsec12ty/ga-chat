@@ -13,6 +13,7 @@ class MessagesController < ApplicationController
       # JavaScript is listening for messages broadcast to this user's channel
       # in the file app/assets/javascripts/channels/messages.js
       ActionCable.server.broadcast "messages_#{params[:recipient_id]}",
+        type: "message",
         message: @message,
         user: @message.sender
     end
