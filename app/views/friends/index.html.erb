@@ -8,6 +8,7 @@
    <div class="user_results"></div>
  </div>
 
+<div id="search--results">
 <% if @friends.present? %>
   <ul>
     <% @friends.each do |friend| %>
@@ -22,3 +23,4 @@
   <% else %>
   <p>Find Your Friends and Start Messaging!</p>
 <% end %>
+</div>
