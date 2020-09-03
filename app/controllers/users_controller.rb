@@ -65,6 +65,11 @@ class UsersController < ApplicationController
     render json: User.where("name ILIKE ?", "%#{params[:query]}%")
   end
 
+  def user_profile
+    @user = User.find(params[:query])
+    render layout: false
+  end
+
   private
 
   def user_params

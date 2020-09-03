@@ -15,3 +15,6 @@
 //= require jquery_ujs
 //= require_tree .
 //= require_tree ./channels
+//= require jquery3
+//= require popper
+//= require bootstrap

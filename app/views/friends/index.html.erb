@@ -8,17 +8,23 @@
    <div class="user_results"></div>
  </div>
 
+<div class="friends_list_wrapper">
 <% if @friends.present? %>
-  <ul>
-    <% @friends.each do |friend| %>
-    <li>
-      <%= check_user_image_small(friend) %>
-      <%= link_to friend.name, user_path(friend.id) %>
-      <%= button_to "Message", messages_path(friend.id), class: "message_friends", id: friend.id, method: :get %>
-    </li>
-    <% end %>
-  </ul>
-
+    <ul>
+      <% @friends.each do |friend| %>
+      <div class="friends_list_item" id=<%= friend.id %>>
+        <li>
+          <%= check_user_image_small(friend) %>
+          <%= link_to friend.name, user_path(friend.id) %>
+          <h4 class="view_profile" id=<%= friend.id %>>View Profile</h4>
+          <%= button_to "Message", messages_path, class: "message_friends", id: friend.id, method: :get %>
+        </li>
+      </div>
+      <% end %>
+    </ul>
   <% else %>
   <p>Find Your Friends and Start Messaging!</p>
 <% end %>
+</div>
+
+<div class="user_profile"></div>

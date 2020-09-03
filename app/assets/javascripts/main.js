@@ -138,6 +138,10 @@ $(document).ready(function () {
         <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
       </li>
       `)
+      $(`.last_message_${recipientId}`).html(`
+        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>        
+        <p>${message.content}</p>
+      `)
     })
     .fail(error => console.log(error))
     $('.message_send_text').val('');
@@ -194,26 +198,38 @@ $(document).ready(function () {
     $('.user_search_text').focus()
   });
 
-  /* -------------------- Message User -------------------- */
+  /* -------------------- Friends -------------------- */
 
   $('.message_friends').on('click', (e) => {
     console.log(e.currentTarget.id);
     let id = e.currentTarget.id;
     localStorage.setItem('id', JSON.stringify(id));
-    // $.post(`/conversations`, {
-    //     friendId: id,
-    //   })
-    //   .done(user => {
-    //     $('.message_list').prepend(`
-    //       <div class=class="message_list_item" id=${user.id}>
-    //       <li>
-    //         <h3>${user.name}</h3>
-    //       </li>
-    //       </div>
-    //     `)
-    //   })
-    //   .fail(error => console.log(error))
+    $.post(`/messages/conversations`, {
+        friendId: id,
+      })
+      .done(friend => {
+        $('.message_list').prepend(`
+          <div class = "message_list_item" id=${friend.id} >
+          <li>
+            <h3>${user.name}</h3>
+          </li>
+          </div>
+        `)
+      })
+      .fail(error => console.log(error))
   })
+
+  $('.view_profile').on('click', (e) => {
+    $('.user_profile').empty();
+    const query = e.currentTarget.id;
+    console.log(query);
+    $.get(`/users/profile/${query}`)
+    .done(data => {
+      console.log("Template:", data);
+      $('.user_profile').append(data)
+      })
+    .fail(error => console.log(error));
+  });
 
   /* -------------------- Requests Tab -------------------- */
 

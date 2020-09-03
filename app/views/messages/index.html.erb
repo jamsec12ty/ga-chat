@@ -17,43 +17,22 @@
             <%= check_user_image_small(friend) %>
             <h3><%= friend.name %></h3>
             <% last_message = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, friend.id]) + Message.where(["sender_id = ? and recipient_id = ?", friend.id, @current_user.id])).sort_by(&:created_at).last %>
-            <% if last_message.present? %>
-              <% if last_message.created_at > Time.now.beginning_of_day %>
-                <p><%= last_message.created_at.strftime("%l:%M %p") %></p>
-              <% else %>
-                <p><%= last_message.created_at.strftime("%e %b %Y") %></p>
+            <div class="last_message_<%= friend.id %>">
+              <% if last_message.present? %>
+                <% if last_message.created_at > Time.now.beginning_of_day %>
+                  <p><%= last_message.created_at.strftime("%l:%M %p") %></p>
+                <% else %>
+                  <p><%= last_message.created_at.strftime("%e %b %Y") %></p>
+                <% end %>
+                <p><%= last_message.content %></p>
               <% end %>
-              <p><%= last_message.content %></p>
-            <% end %>
+            </div>
           <!-- <% end %> -->
           </li>
         </div>
       <% end %>
     </ul>
-  <% else %>
-    <p>You don't have messages.</p>
   <% end %>
-  <!--# <div class="start_conversation">
-    <button class="show_friends">Message</button>
-  </div>
-  <div class="message_friends_list hide">
-    <% if @current_user.friends.present? %>
-      <button class="hide_friends">Cancel</button>
-      <h4>Send a message to a friend:</h4>
-      <ul>
-      <% @current_user.friends.each do |friend| %>
-        <div class="message_list_item " id=<%= friend.id %>>
-          <li>
-            <%= check_user_image_small(friend) %>
-            <h3><%= friend.name %></h3>
-          </li>
-        </div>
-      <% end %>
-      </ul>
-    <% else %>
-      <p>You don't have friends.</p>
-    <% end %>
-  </div> -->
 </nav>
 
 <div class="message_window_wrapper">

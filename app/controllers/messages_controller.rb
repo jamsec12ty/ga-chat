@@ -29,8 +29,6 @@ class MessagesController < ApplicationController
   def index
     # @messaged_friends = @current_user.all_messaged_friends
     @friends = @current_user.friends
-
-    # @message = Message.new
   end
 
   def show
@@ -61,16 +59,16 @@ class MessagesController < ApplicationController
     render json: messages, include: [:sender, :recipient]
   end
 
-  # def conversation_create
-  #   raise "hell"
-  #   @user = User.find params[:friendId]
-  #   @current_user.all_messaged_friends << @user
-  #   if @user.save
-  #     ActionCable.server.broadcast "conversations",
-  #       user: @user
-  #   end
-  #   render json: @user
-  # end
+  def conversation_create
+    raise "hell"
+    @user = User.find params[:friendId]
+    @current_user.all_messaged_friends << @user
+    # if @user.save
+    #   ActionCable.server.broadcast "conversations",
+    #     user: @user
+    # end
+    render json: @user
+  end
 
   private
 

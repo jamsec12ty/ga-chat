@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # ----------------------- Users ----------------------- #
   get "/users/search/:query" => "users#user_search"
+  get "/users/profile/:query" => "users#user_profile"
 
   resources :users do
     # ----------------------- Friends ----------------------- #
@@ -30,6 +31,6 @@ Rails.application.routes.draw do
   resources :messages
   post "/messages" => "messages#create"
 
-  post "/conversations" => "messages#conversation_create"
+  post "/messages/conversations" => "messages#conversation_create"
 
 end
