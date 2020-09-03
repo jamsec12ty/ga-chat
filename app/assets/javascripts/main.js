@@ -253,8 +253,8 @@ $(document).ready(function () {
     $.post(`/users/${friend_id}/friends`)
     .done(data => {
       console.log("Friendship create response:", data);
-      console.log($(this).text());
-      $(this).props('disabled', 'true');
+      $(this).text("Pending");
+      $(this).prop('disabled', true);
     })
     .fail(error => console.log(error));
   });
@@ -274,6 +274,8 @@ $(document).ready(function () {
     // $.post(`/users/${friend_id}/friends/${current_user_id}`)
     .done(data => {
       console.log("Friendship create response:", data);
+      $(this).text("Accepted");
+      $(this).prop('disabled', true);
     })
     .fail(error => console.log(error));
   });
