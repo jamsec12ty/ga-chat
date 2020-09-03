@@ -1,8 +1,47 @@
 let cloudinaryUploadPublicId = null;
 
+// Check if Local Storage can be used
+let localStorageSaved = true;
+// If not available change to false
+if (localStorage === undefined) {
+  localStorageSaved = false;
+}
+
 $(document).ready(function () {
-  console.log('Testing');
+
+  let recipientId;
+
+  /* -------------------- Local Storage ------------------- */
+
+  if (localStorageSaved) {
+    if (localStorage.id !== undefined) {
+      console.log('localStorage', localStorage.id);
+      let query = JSON.parse(localStorage.getItem('id'));
+      console.log(query);
+      recipientId = query;
+      $(`#${query}`).addClass('selected');
+      $.getJSON(`messages/show/${query}`)
+        .done(data => {
+          console.log(data);
+          data.forEach(message => {
+            $('.message_window').append(`
+        <li>
+          <p><strong>${message.sender.name}</strong></p>
+          <div class="message_item">
+            <p>${message.content}</p>
+          </div>
+          <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+        </li>
+        `)
+          })
+        }).fail(error => console.log(error));
+      $('.message_send_wrapper').show();
+    }
+  }
+
+
   /* ------------------- Message Search ------------------- */
+
 
   $('.show_friends').on('click', function(){
     $('.message_friends_list').show();
@@ -60,11 +99,14 @@ $(document).ready(function () {
   });
 
   // Show message window
-  let recipientId;
-  $(".message_list_item").on('click', (e) => {
-    $(".message_window").empty();
+  $('.message_list_item').on('click', (e) => {
+    $('.message_window').empty();
+    $('.message_send_wrapper').show();
+    $(e.currentTarget).addClass('selected');
+    $(e.currentTarget).siblings().removeClass('selected');
     const query = e.currentTarget.id;
-    recipientId = query; // Save the last clicked user id, for using when sending message
+    // Save the last clicked user id, for using when sending message
+    recipientId = query;
     console.log(e.currentTarget.id);
     $.getJSON(`messages/show/${query}`)
     .done( data => {
@@ -85,6 +127,7 @@ $(document).ready(function () {
       })
     }).fail(error => console.log(error));
   });
+
 
   // TODO : Unsigned Name, the owner of the heroku config keys will have to enable unsigned upload under their account settings in cloudinary
   // This attaches the <input type=file> file chooser to the form.
@@ -136,6 +179,7 @@ $(document).ready(function () {
 
 })
 
+  // Send message form
   $('.message_send_button').on('click', (e) => {
     e.preventDefault();
 
@@ -149,6 +193,7 @@ $(document).ready(function () {
       attachment: cloudinaryUploadPublicId
     })
     .done(message => {
+
       $(".cloudinary_fileupload").val("").show(); // Shown for the next upload
       $('.thumbnails').empty(); // Clear for the next upload
 
@@ -161,16 +206,23 @@ $(document).ready(function () {
           <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
         </li>`
       );
+      $(`.last_message_${recipientId}`).html(`
+        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+        <p>${message.content}</p>
+        `)
 
       if (cloudinaryUploadPublicId !== null) {
         $('.message_window').append($.cloudinary.image(message.attachment, { width: 200 }));
         // Clearing this so that we do not attach an old upload to a new message
         cloudinaryUploadPublicId = null;
       }
+
+
     })
     .fail(error => console.log(error))
     $('.message_send_text').val('');
   }); // End Of Send Click Handler
+
 
   /* --------------------- User Search -------------------- */
 
@@ -182,18 +234,27 @@ $(document).ready(function () {
   });
 
   const getSearchResults = function(queryText) {
+    if (queryText.trim() === '') {
+      $('.user_results').empty();
+      return;
+    }
+
     // Perform AJAX request
     $.getJSON(`/users/search/${queryText}`, {
       name: queryText
       })
       .done(function (data) {
-        $(".user_search_text").val("");
         console.log(data);
         displaySearchResults(data);
       }).fail(function (err) {
         return console.warn(err);
     });
   };
+
+
+  $('.user_search_text').on('input', function() {
+    getSearchResults($(this).val());
+  });
 
   const displaySearchResults = (results) => {
     // Save a reference to the results div DOM node
@@ -205,6 +266,7 @@ $(document).ready(function () {
     results.forEach( user => {
       $results.append(`
       <p><a href = '/users/${user.id}'>${user.name}</a></p>
+      <p class="view_profile" id=${user.id}>View Profile</p>
       `);
     });
 
@@ -222,18 +284,91 @@ $(document).ready(function () {
     $('.user_search_text').focus()
   });
 
+  /* -------------------- Friends -------------------- */
+
+  $('.message_friends').on('click', (e) => {
+    console.log(e.currentTarget.id);
+    let id = e.currentTarget.id;
+    localStorage.setItem('id', JSON.stringify(id));
+    $.post(`/messages/conversations`, {
+        friendId: id,
+      })
+      .done(friend => {
+        $('.message_list').prepend(`
+          <div class = "message_list_item" id=${friend.id} >
+          <li>
+            <h3>${user.name}</h3>
+          </li>
+          </div>
+        `)
+      })
+      .fail(error => console.log(error))
+  })
+
+  // Show user profile
+  $(document).on('click', '.view_profile', (e) => {
+    $('.user_profile').empty();
+    const query = e.currentTarget.id;
+    console.log(query);
+    $.get(`/users/profile/${query}`)
+    .done(data => {
+      console.log("Template:", data);
+      $('.user_profile').append(data)
+      })
+    .fail(error => console.log(error));
+  });
+
+
+  $("#add_friend").on('click', function(){
+    const friend_id = $(this).attr("friend_id");
+    console.log("add button clicked", friend_id);
+    $.post(`/users/${friend_id}/friends`)
+    .done(data => {
+      console.log("Friendship create response:", data);
+      $(this).text("Pending");
+      $(this).prop('disabled', true);
+    })
+    .fail(error => console.log(error));
+  });
+
+  $("#accept_friend").on('click', function(){
+    const friend_id = $(this).attr("friend_id");
+    const current_user_id = $(this).attr("current_user_id");
+    console.log("accept button clicked", friend_id);
+    $.ajax({
+       type: 'PATCH',
+       url: `/users/${friend_id}/friends/${current_user_id}`,
+       // data: JSON.stringify(patch),
+       processData: false,
+       contentType: 'application/merge-patch+json',
+       /* success and error handling omitted for brevity */
+    })
+    // $.post(`/users/${friend_id}/friends/${current_user_id}`)
+    .done(data => {
+      console.log("Friendship create response:", data);
+      $(this).text("Accepted");
+      $(this).prop('disabled', true);
+    })
+    .fail(error => console.log(error));
+  });
+
+
   /* -------------------- Requests Tab -------------------- */
 
   $('.pending_requests_tab').on('click', function(){
     console.log("clicked");
     $('.pending_requests').show();
     $('.received_requests').hide();
+    $('.pending_requests_tab').attr('id', 'link_current');
+    $('.received_requests_tab').attr('id', '');
   });
 
   $('.received_requests_tab').on('click', function(){
     console.log("clicked");
     $('.pending_requests').hide();
     $('.received_requests').show();
+    $('.pending_requests_tab').attr('id', '');
+    $('.received_requests_tab').attr('id', 'link_current');
   });
 
 });

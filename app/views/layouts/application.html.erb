@@ -13,11 +13,13 @@
 
   </head>
 
-  <body>
-
-    <nav class="main_nav">
+  <body class="container-fluid no-padding">
+    <div class="notification">
+    </div>
+    <div class="row no-gutters">
+    <nav class="col-2 main_nav">
       <div class="main_nav_logo_wrapper">
-        Logo
+        <%= link_to image_tag("ga_logo.svg", alt: "Ga-Chat Logo", class: "logo"), root_path %>
       </div>
       <div class="main_nav_item_wrapper">
         <ul class="main_nav_item">
@@ -33,11 +35,17 @@
           <% end %>
         </ul>
       </div>
+      <div class="copy_msg">
+        <p>&copy; SEI37 Productions</p>
+      </div>
     </nav>
-    <hr />
 
-    <%= yield %>
-
+    <div class="col-9">
+      <div class="container-fluid no-padding">
+        <%= yield %>
+      </div>
+    </div>
+    </div>
   </body>
 
 </html>

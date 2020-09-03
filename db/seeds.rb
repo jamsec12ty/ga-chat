@@ -138,7 +138,7 @@ m2 = Message.create!(
 
 m3 = Message.create!(
   sender_id: u1.id,
-  recipient_id: u4.id,
+  recipient_id: u6.id,
   content: "Wazzzzzzzzzzap!!!!"
 )
 

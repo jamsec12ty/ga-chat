@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # ----------------------- Users ----------------------- #
   get "/users/search/:query" => "users#user_search"
+  get "/users/profile/:query" => "users#user_profile"
 
   resources :users do
     # ----------------------- Friends ----------------------- #
@@ -26,8 +27,8 @@ Rails.application.routes.draw do
 
   # Serve websocket cable requests in-process
   mount ActionCable.server => '/cable'
-  post "/messages" => "messages#create"
 
+  post "/messages" => "messages#create"
   resources :messages
 
 end

@@ -58,3 +58,5 @@ gem 'jquery-rails'
 
 gem 'cloudinary'
 gem 'redis', '~> 3.3.5'
+
+gem 'bootstrap'

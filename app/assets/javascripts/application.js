@@ -16,3 +16,6 @@
 //= require_tree .
 //= require_tree ./channels
 //= require cloudinary
+//= require jquery3
+//= require popper
+//= require bootstrap

@@ -20,6 +20,7 @@ class UsersController < ApplicationController
 
 
   def index
+    # @user = User.all
   end
 
 
@@ -58,12 +59,16 @@ class UsersController < ApplicationController
     redirect_to user_path(@user)
   end
 
-
   def destroy
   end
 
   def user_search
     render json: User.where("name ILIKE ?", "%#{params[:query]}%")
+  end
+
+  def user_profile
+    @user = User.find(params[:query])
+    render layout: false
   end
 
   private

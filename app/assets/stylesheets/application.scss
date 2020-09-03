@@ -1,0 +1,235 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+@import "bootstrap";
+
+html, body, div, nav, header, footer, ul, li, label, input, textarea, button, h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ul, li {
+  text-decoration: none;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #FA4542;
+  text-decoration: none;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.selected {
+  background-color: rgb(235, 235, 235);
+}
+
+.vertical-alignment {
+  display: flex;
+  align-items: center;
+}
+
+.empty_message {
+  padding: 40px 40px;
+}
+
+/* ---------------------- Homepage ---------------------- */
+
+.main_nav {
+  background-color: #262525;
+  color: white;
+  height: 100vh;
+}
+
+.main_nav_logo_wrapper {
+  margin: 40px;
+}
+
+.main_nav_item a {
+  color: white;
+  font-size: 20px;
+}
+
+.main_nav_item a:hover {
+  color: #FA4542;
+  text-decoration: none;
+}
+
+.main_nav_item {
+  padding-left: 40px;
+}
+
+.main_nav_item li {
+  padding: 10px 0;
+}
+
+h1 {
+  font-size: 44px;
+  margin-bottom: 40px;
+}
+
+.sm-text {
+  font-size: 14px;
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+/* ------------------------ Forms ----------------------- */
+
+.message_search_form, .user_search_form {
+  height: 30px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.message_search_text, .user_search_text {
+  height: 30px;
+  border: 1px solid #aeacac;
+  border-radius: 0;
+}
+
+.message_search_button, .user_search_button {
+  background-color: #262525;
+  color: white;
+  border: none;
+  height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.message_search_button:hover, .user_search_button:hover {
+  background-color: #FA4542;
+}
+
+label {
+  height: 40px;
+}
+
+
+/* ---------------------- Messages ---------------------- */
+
+.message_nav {
+  background-color: #F6F6F6;
+  padding: 30px 20px;
+  height: 100vh;
+}
+
+.message_list_item {
+  padding: 20px 10px;
+  cursor: pointer;
+}
+
+.message_window_wrapper {
+  height: 100vh;
+  overflow: auto;
+}
+
+.message_friends {
+  background-color: #262525;
+  color: white;
+  border: none;
+  height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* ----------------------- Friends ---------------------- */
+
+.friends_nav {
+  background-color: #F6F6F6;
+  padding: 30px 40px;
+  height: 100vh;
+}
+
+.friends_list_item {
+  padding: 20px 10px;
+}
+
+/* ---------------------- Requests ---------------------- */
+
+.requests_nav {
+  background-color: #F6F6F6;
+  padding: 30px 40px;
+  height: 100vh;
+}
+
+.requests_tab li {
+  display: inline-block;
+  padding: 10px 50px;
+}
+
+.requests_tab li h4:hover {
+  color: #FA4542;
+  cursor: pointer;
+}
+
+.requests_list_item {
+  padding: 20px 10px;
+
+}
+
+/* ------------------------ Users ----------------------- */
+
+.user_avatar {
+  margin: 20px auto 10px;
+}
+
+.profile_image_small {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid #dcdcdc
+}
+
+.profile_image_large {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 1px solid #dcdcdc
+}
+
+#link_current {
+  padding-bottom: 15px;
+  border-bottom: 2px solid #FA4542;
+}
+
+/* ----------------------- Profile ---------------------- */
+
+.user_profile {
+  margin-top: 40px;
+
+}
+
+.notification {
+  position: fixed;
+  z-index: 100;
+  right: 20px;
+  bottom: 40px;
+  
+}

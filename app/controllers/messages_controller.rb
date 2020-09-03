@@ -5,7 +5,6 @@ class MessagesController < ApplicationController
   def new
   end
 
-############################################################################
   def create
     @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id, attachment: params[:attachment]
     # p @message.errors.full_messages
@@ -14,16 +13,11 @@ class MessagesController < ApplicationController
       # JavaScript is listening for messages broadcast to this user's channel
       # in the file app/assets/javascripts/channels/messages.js
       ActionCable.server.broadcast "messages_#{params[:recipient_id]}",
+        type: "message",
         message: @message,
-        user: @message.sender
+        user: @message.sender,
+        attachment: @message.attachment
     end
-###########################################################################
-    # if params[:file].present?
-    #   response = Cloudinary::Uploader.upload params[:file]
-    #   @message.attachment = response['public_id']
-    #   @message.save
-    # end
-###########################################################################
 
     # we respond to the ajax request with the created message object
     # so that in the Ajax .done handler, we can append the created message
@@ -34,11 +28,9 @@ class MessagesController < ApplicationController
 
   end
 
-
-
-
   def index
-    @messaged_friends = @current_user.all_messaged_friends
+    # @messaged_friends = @current_user.all_messaged_friends
+    @friends = @current_user.friends
     @message = Message.new
   end
 
@@ -65,9 +57,9 @@ class MessagesController < ApplicationController
   end
 
   def message_show
-    messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient)
+    messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient, :attachment)
 
-    render json: messages, include: [:sender, :recipient]
+    render json: messages, include: [:sender, :recipient, :attachment]
   end
 
   private

@@ -1,43 +1,61 @@
-<h1>My Requests</h1>
-
-<div class="requests_tab">
-<ul>
-  <li><p class="pending_requests_tab">Pending Requests</p></li>
-  <li><p class="received_requests_tab">Received Requests</p></li>
-</ul>
-
-<div class="pending_requests show">
-  <h2>Pending Request</h2>
-    <% if @current_user.pending_requests.exists? %>
-
-      <ul>
-        <% @current_user.pending_requests.each do |friend|  %>
-        <li>
-          <%= check_user_image_small(friend) %>
-          <%=link_to friend.name, user_path(friend.id)%>
-        </li>
-        <% end %>
+<div class="row">
+  <div class="col-5">
+    <nav class="requests_nav">
+      <h1>My Requests</h1>
+      <div class="requests_tab">
+      <ul class="requests_tab">
+        <li><h4 class="pending_requests_tab" id="link_current">Pending</h4></li>
+        <li><h4 class="received_requests_tab" id="">Received</h4></li>
       </ul>
-    <% else %>
-      <p>No Pending Requests</p>
-    <% end %>
-</div>
+      <div class="pending_requests show">
+          <% if @current_user.pending_requests.exists? %>
+            <ul>
+              <% @current_user.pending_requests.each do |friend|  %>
+              <div class="requests_list_item">
+              <li class="container-fluid">
+                <div class="row vertical-alignment">
+                  <div class="col-3">
+                  <%= check_user_image_small(friend) %>
+                  </div>
+                  <div class="col-4">
+                  <h5> <%= friend.name %> </h5>
+                  </div>
+                  <div class="col-5">
+                  <a class="view_profile" id=<%= friend.id %>>View Profile</a>
+                  </div>
+                </div>
+              </li>
+              </div>
+              <% end %>
+            </ul>
+          <% else %>
+          <div class="empty_message">
+            <h5>No pending requests.</h5>
+          </div>  
+          <% end %>
+      </div>
+      <div class="received_requests hide">
+          <% if @current_user.received_requests.exists? %>
 
-<div class="received_requests hide">
-  <h2>Received Request</h2>
-    <% if @current_user.received_requests.exists? %>
+            <ul>
+              <% @current_user.received_requests.each do |friend|  %>
+              <li>
+                <%= check_user_image_small(friend) %>
+                <%=link_to friend.name, user_path(friend.id)%>
+                <p class="view_profile" id=<%= friend.id %>>View Profile</p>
+              </li>
+              <% end %>
+            </ul>
+          <% else %>
+          <div class="empty_message">
+            <h5>You do not have any friend requests.</h5>
+          </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
 
-      <ul>
-        <% @current_user.received_requests.each do |friend|  %>
-        <li>
-          <%= check_user_image_small(friend) %>
-          <%=link_to friend.name, user_path(friend.id)%>
-        </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>You do not have any Friend Requests</p>
-    <% end %>
-</div>
-
+  <div class="col-7">
+    <div class="user_profile"></div>
+  </div>
 </div>
