@@ -1,27 +1,27 @@
-<h2>Your Profile</h2>
+<div class="container user_profile">
+  <h1>Your Profile</h1>
+  <hr>
+  <h5>Name:</h5>
+  <h3><%= @user.name %></h3>
+  <br>
+  <h5>Email: </h5>
+  <h3><%= @user.email %></h3>
+  <br>
+  <h5>Profile Image: </h5>
+  <div class="user_avatar">
+    <%= check_user_image_large(@user) %>
+  </div>
 
-<p>
-<strong>Name:</strong> <%= @user.name %>
-</p>
-<p>
-<strong>Email: </strong><%= @user.email %>
-</p>
-<p>
-<strong>Profile Image: </strong>
-</p>
-<div class="user_avatar">
-  <%= check_user_image_large(@user) %>
+  <% if @user.id === @current_user.id %>
+    <p><%= link_to "Edit profile", edit_user_path %></p>
+  <% elsif @current_user.friends.include? @user %>
+    <%= button_to "Message", messages_path(@user.id), class: "message_friends", id: @user.id, method: :get %>
+    <%= link_to "Unfriend", user_friend_path(@user.id, @current_user.id), method: "delete" %>
+  <% elsif @current_user.pending_requests.include? @user %>
+    <p>Waiting for Approval</p>
+  <% elsif @current_user.received_requests.include? @user %>
+    <%= button_to "Accept", user_friend_path(@user.id, @current_user.id), method: :put %>
+  <% else %>
+    <%= button_to "Add Friend", user_friends_path(@user.id), method: :post %>
+  <% end %>
 </div>
-
-<% if @user.id === @current_user.id %>
-  <p><%= link_to "Edit profile", edit_user_path %></p>
-<% elsif @current_user.friends.include? @user %>
-  <%= button_to "Message", messages_path(@user.id), class: "message_friends", id: @user.id, method: :get %>
-  <%= link_to "Unfriend", user_friend_path(@user.id, @current_user.id), method: "delete" %>
-<% elsif @current_user.pending_requests.include? @user %>
-  <p>Waiting for Approval</p>
-<% elsif @current_user.received_requests.include? @user %>
-  <%= button_to "Accept", user_friend_path(@user.id, @current_user.id), method: :put %>
-<% else %>
-  <%= button_to "Add Friend", user_friends_path(@user.id), method: :post %>
-<% end %>

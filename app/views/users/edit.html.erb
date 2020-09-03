@@ -1,11 +1,14 @@
-<h3>Edit Profile</h3>
+<div class="container user_profile">
+<h1>Edit Profile</h1>
+<hr>
 
 <%= form_for @user, html: {multipart: true} do |f| %>
-  <hr>
   <%= f.label :name %>
   <%= f.text_field :name %>
+  <br>
   <%= f.label :image, "Edit Profile Image:" %>
   <%= f.cl_image_upload :image %>
   <br><br>
   <%= f.submit %>
 <% end %>
+</div>

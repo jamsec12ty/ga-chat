@@ -1,30 +1,49 @@
-<h1>Search Friends</h1>
-
-<div class="user_search_wrapper">
-   <form class="user_search_form">
-     <input type="text" class="user_search_text" />
-     <button class="user_search_button">Search</button>
-   </form>
-   <div class="user_results"></div>
- </div>
-
-<div class="friends_list_wrapper">
-<% if @friends.present? %>
-    <ul>
-      <% @friends.each do |friend| %>
-      <div class="friends_list_item" id=<%= friend.id %> style="border: none">
-        <li>
-          <%= check_user_image_small(friend) %>
-          <%= link_to friend.name, user_path(friend.id) %>
-          <p class="view_profile" id=<%= friend.id %>>View Profile</p>
-          <%= button_to "Message", messages_path, class: "message_friends", id: friend.id, method: :get %>
-        </li>
-      </div>
+<div class="row">
+  <div class="col-5">
+  <nav class="friends_nav">
+    <h1>Search Friends</h1>
+    <hr>
+    <div class="user_search_wrapper">
+      <form class="user_search_form">
+        <input type="text" class="user_search_text" />
+        <button class="user_search_button">Search</button>
+      </form>
+      <div class="user_results"></div>
+    </div>
+    <div class="friends_list_wrapper">
+      <% if @friends.present? %>
+          <ul>
+            <% @friends.each do |friend| %>
+            <div class="friends_list_item" id=<%= friend.id %> style="background-color: #F6F6F6">
+              <li class="container-fluid">
+                <div class="row vertical-alignment">
+                <div class="list_item_left col-3">
+                <%= check_user_image_small(friend) %>
+                </div>
+                <div class="list_item_right col-9 container-fluid">
+                <div class="row vertical-alignment">
+                  <div class="col-6">
+                    <h5> <%= friend.name %> </h5>
+                    <a class="view_profile" id=<%= friend.id %>>View Profile</a>
+                  </div>
+                  <div class="col-6">
+                  <%= button_to "Message", messages_path, class: "message_friends", id: friend.id, method: :get %>
+                  </div>
+                </div>
+                </div>
+                </div>
+              </li>
+            </div>
+            <% end %>
+          </ul>
+        <% else %>
+        <p>Find Your Friends and Start Messaging!</p>
       <% end %>
-    </ul>
-  <% else %>
-  <p>Find Your Friends and Start Messaging!</p>
-<% end %>
-</div>
+    </div>
+  </nav>
+  </div>
 
-<div class="user_profile"></div>
+  <div class="col-7">
+    <div class="user_profile"></div>
+  </div>
+</div>

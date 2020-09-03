@@ -233,6 +233,7 @@ $(document).ready(function () {
       .fail(error => console.log(error))
   })
 
+  // Show user profile
   $(document).on('click', '.view_profile', (e) => {
     $('.user_profile').empty();
     const query = e.currentTarget.id;
@@ -251,12 +252,16 @@ $(document).ready(function () {
     console.log("clicked");
     $('.pending_requests').show();
     $('.received_requests').hide();
+    $('.pending_requests_tab').attr('id', 'link_current');
+    $('.received_requests_tab').attr('id', '');
   });
 
   $('.received_requests_tab').on('click', function(){
     console.log("clicked");
     $('.pending_requests').hide();
     $('.received_requests').show();
+    $('.pending_requests_tab').attr('id', '');
+    $('.received_requests_tab').attr('id', 'link_current');
   });
 
 });
