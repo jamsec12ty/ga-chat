@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
 
 ############################################################################
   def create
-    @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id
+    @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id, attachment: params[:attachment]
     # p @message.errors.full_messages
     if @message.save
       # JavaScript is listening for messages broadcast to this user's channel
@@ -15,7 +15,8 @@ class MessagesController < ApplicationController
       ActionCable.server.broadcast "messages_#{params[:recipient_id]}",
         type: "message",
         message: @message,
-        user: @message.sender
+        user: @message.sender,
+        attachment: @message.attachment
     end
 
     # we respond to the ajax request with the created message object
@@ -55,9 +56,9 @@ class MessagesController < ApplicationController
   end
 
   def message_show
-    messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient)
+    messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient, :attachment)
 
-    render json: messages, include: [:sender, :recipient]
+    render json: messages, include: [:sender, :recipient, :attachment]
   end
 
   private
