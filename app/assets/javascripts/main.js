@@ -1,6 +1,7 @@
+let cloudinaryUploadPublicId = null;
+
 $(document).ready(function () {
   console.log('Testing');
-
   /* ------------------- Message Search ------------------- */
 
   $('.show_friends').on('click', function(){
@@ -77,35 +78,99 @@ $(document).ready(function () {
           </div>
           <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
         </li>
-        `)
+        `);
+        if (message.attachment !== null) {
+          $('.message_window').append($.cloudinary.image(message.attachment, { width: 200 }));
+        }
       })
     }).fail(error => console.log(error));
   });
 
-  $('.message_send_form').on('submit', (e) => {
+  // TODO : Unsigned Name, the owner of the heroku config keys will have to enable unsigned upload under their account settings in cloudinary
+  // This attaches the <input type=file> file chooser to the form.
+  $('.message_send_text').after($.cloudinary.unsigned_upload_tag("rruzhrqp",
+  { cloud_name: 'sarop-bajra' }));
+
+  $('.cloudinary_fileupload').unsigned_cloudinary_upload(
+    "rruzhrqp",
+    { cloud_name: 'sarop-bajra', tags: 'browser_uploads' },
+    { multiple: true }
+  )
+  .bind('fileuploadchange', function(e, data){
+
+    // We disable the message send button while the file is uploading
+    // Otherwise the user might send a message before the file has uploaded and
+    // the public_id won't be attached
+    $('.message_send_button').prop("disabled", true).text("Uploading... Please Wait");
+
+    // We hide the file chooser to prevent the user from uploading another image to
+    // the same message, since only the last image upload will be saved in the database.
+    $(".cloudinary_fileupload").hide();
+  })
+  .bind('cloudinaryprogress', function(e, data) {
+
+    // Update Progress Bar size while uploading
+    $('.progress_bar').css('width',
+      Math.round((data.loaded * 100.0) / data.total) + '%');
+
+  })
+  .bind('cloudinarydone', function(e, data) {
+    // When the upload is finished cloudinary give us the response in the 'data' variable
+    // We save the public_id to a global variable 'cloudinaryUploadPublicId', so we can
+    // submit it to our MessagesController in the AJAX request which is triggered by
+    // clicking send
+    cloudinaryUploadPublicId = data.result.public_id;
+    console.log("cloudinary response", data);
+    $('.progress_bar').hide();
+
+    // We re-enable the send button now that the file has finished uploading
+    $('.message_send_button').prop("disabled", false).text("Send");
+
+    // Show a preview of the uploaded image, to give feedback to the user
+    $('.thumbnails').append(
+      $.cloudinary.image(
+        data.result.public_id,
+        { width: 100, height: 100, crop: 'thumb', gravity: 'face' }
+      )
+    );
+
+})
+
+  $('.message_send_button').on('click', (e) => {
     e.preventDefault();
+
     const message = $('.message_send_text').val();
-    console.log(message);
-    console.log("Recipient ID:", recipientId);
+    // console.log(message);
+    // console.log("Recipient ID:", recipientId);
+    // console.log("cloudinaryUploadPublicId:", cloudinaryUploadPublicId);
     $.post(`/messages`, {
       recipient_id: recipientId,
-      content: message
+      content: message,
+      attachment: cloudinaryUploadPublicId
     })
     .done(message => {
+      $(".cloudinary_fileupload").val("").show(); // Shown for the next upload
+      $('.thumbnails').empty(); // Clear for the next upload
 
       $('.message_window').append(`
-      <li>
-        <p><strong>${message.sender.name}</strong></p>
-        <div class="message_item">
-          <p>${message.content}</p>
-        </div>
-        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
-      </li>
-      `)
+        <li>
+          <p><strong>${message.sender.name}</strong></p>
+          <div class="message_item">
+            <p>${message.content}</p>
+          </div>
+          <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+        </li>`
+      );
+
+      if (cloudinaryUploadPublicId !== null) {
+        $('.message_window').append($.cloudinary.image(message.attachment, { width: 200 }));
+        // Clearing this so that we do not attach an old upload to a new message
+        cloudinaryUploadPublicId = null;
+      }
     })
     .fail(error => console.log(error))
     $('.message_send_text').val('');
-  });
+  }); // End Of Send Click Handler
 
   /* --------------------- User Search -------------------- */
 

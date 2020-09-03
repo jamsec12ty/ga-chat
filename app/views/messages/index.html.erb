@@ -40,11 +40,30 @@
   <ul class="message_window" id=<%= @current_user.id %>>
   </ul>
   <div class="message_send_wrapper">
-    <form class="message_send_form">
+
+    <!-- <form class="message_send_form">
       <input type="text" class="message_send_text" />
       <button class="message_end_button">Send</button>
-    </form>
-  </div>    
+    </form> -->
+    <%= form_for @message, html: {multipart: true, class: 'message_send_form'} do |f| %>
+      <hr>
+      <%= f.label :content %>
+      <%= f.text_area :content, class: 'message_send_text' %>
+      <br>
+      <%# f.label :attachment, 'Attachment' %>
+      <%# f.cl_image_upload :attachment, class: 'message_attachment' %>
+      <div class="thumbnails"></div>
+      <div class="progress_bar_parent">
+        <div class="progress_bar"></div>
+      </div>
+
+      <br><br>
+      <%# f.submit nil, class: 'message_send_button' %>
+      <button class="message_send_button">Send</button>
+    <% end %>
+
+
+  </div>
 </div>
 
 <div class="message_friends_list hide">

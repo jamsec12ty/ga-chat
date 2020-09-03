@@ -7,8 +7,9 @@ class MessagesController < ApplicationController
 
 ############################################################################
   def create
-    @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id
+    @message = Message.create content: params[:content], recipient_id: params[:recipient_id], sender_id: @current_user.id, attachment: params[:attachment]
     # p @message.errors.full_messages
+    # binding.pry
     if @message.save
       # JavaScript is listening for messages broadcast to this user's channel
       # in the file app/assets/javascripts/channels/messages.js
@@ -16,6 +17,13 @@ class MessagesController < ApplicationController
         message: @message,
         user: @message.sender
     end
+###########################################################################
+    # if params[:file].present?
+    #   response = Cloudinary::Uploader.upload params[:file]
+    #   @message.attachment = response['public_id']
+    #   @message.save
+    # end
+###########################################################################
 
     # we respond to the ajax request with the created message object
     # so that in the Ajax .done handler, we can append the created message
@@ -31,6 +39,7 @@ class MessagesController < ApplicationController
 
   def index
     @messaged_friends = @current_user.all_messaged_friends
+    @message = Message.new
   end
 
   def show
