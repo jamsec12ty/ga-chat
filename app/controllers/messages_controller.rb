@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
 
+  skip_before_action :verify_authenticity_token, raise: false
   before_action :check_if_logged_in
 
   def new
@@ -13,6 +14,7 @@ class MessagesController < ApplicationController
       # JavaScript is listening for messages broadcast to this user's channel
       # in the file app/assets/javascripts/channels/messages.js
       ActionCable.server.broadcast "messages_#{params[:recipient_id]}",
+        type: "message",
         message: @message,
         user: @message.sender
     end

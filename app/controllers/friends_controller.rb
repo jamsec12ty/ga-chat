@@ -1,4 +1,5 @@
 class FriendsController < ApplicationController
+  skip_before_action :verify_authenticity_token, raise: false
   before_action :check_if_logged_in
 
   # CREATE
@@ -7,9 +8,16 @@ class FriendsController < ApplicationController
   end
 
   def create
-    # raise "hell"
-    Friendship.create(user_id: @current_user.id, friend_id: params[:user_id], status: "pending" )
-    redirect_to user_path(params[:user_id])
+
+    @friendship = Friendship.create(user_id: @current_user.id, friend_id: params[:user_id], status: "pending" )
+    # redirect_to user_path(params[:user_id])
+    ActionCable.server.broadcast "messages_#{params[:user_id]}",
+      type: "friend_request",
+      status: "pending",
+      user_name: @current_user.name,
+      user_id: @current_user.id
+
+    render json: @friendship
   end
 
   # READ
@@ -33,7 +41,14 @@ class FriendsController < ApplicationController
 
     @friendship.update(status: "confirmed")
 
-    redirect_to user_path(params[:user_id])
+    ActionCable.server.broadcast "messages_#{params[:user_id]}",
+      type: "friend_request",
+      status: "confirmed",
+      user_name: @current_user.name,
+      user_id: @current_user.id
+
+    render json: @friendship
+    # redirect_to user_path(params[:user_id])
   end
 
   # DELETE
