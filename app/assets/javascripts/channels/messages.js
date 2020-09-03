@@ -14,7 +14,9 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
       </div>
       <p>${data.message.created_at.split('T').join(' ').substring(0, data.message.created_at.length - 5)}</p>
     </li>
-    `)
+    `);
+
+    $('.message_window').append($.cloudinary.image(message.attachment, { width: 200 }));
 
   }
 
