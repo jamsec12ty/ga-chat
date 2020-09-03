@@ -16,12 +16,20 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
           <p>${data.message.created_at.split('T').join(' ').substring(0, data.message.created_at.length - 5)}</p>
         </li>
       `);
+      $('.notification').empty();
+      $('.notification').append(`You have a new message from ${data.user.name}!`);
     }else if (data.type === "friend_request"){
 
       if (data.status === "pending"){
         console.log("friend request pending");
+        $('.notification').empty();
+        $('.notification').append(`You have a new freind request from ${data.user_name}!<br>Please check requests page.`);
+
+
       }else if (data.status === "confirmed"){
         console.log("friend request confirmed");
+        $('.notification').empty();
+        $('.notification').append(`Your friend request has been accepted by ${data.user_name}!<br>You can now message each other :)`);
       }
 
     }else {
