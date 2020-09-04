@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
       ActionCable.server.broadcast "messages_#{params[:recipient_id]}",
         type: "message",
         message: @message,
-        user: @message.sender,
+        user: @message.sender
     end
 
     # we respond to the ajax request with the created message object
