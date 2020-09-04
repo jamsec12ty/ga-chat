@@ -18,9 +18,11 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
         </li>
       `);
       $('.message_window').append($.cloudinary.image(data.message.attachment, { width: 200 }));
+      $('.notification').show();
       $('.notification').empty();
       $('.notification').append(`You have a new message from ${data.user.name}!`);
     }else if (data.type === "friend_request"){
+      $('.notification').show();
 
       if (data.status === "pending"){
         console.log("friend request pending");

@@ -33,12 +33,12 @@ class MessagesController < ApplicationController
     @message = Message.new
   end
 
-  # def show
-  #   @recipient_id = params[:id]
-  #   @conversation_messages = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, @recipient_id]) + Message.where(["sender_id = ? and recipient_id = ?", @recipient_id, @current_user.id])).sort_by(&:created_at)
-  #
-  #   @message = Message.new
-  # end
+  def show
+    @recipient_id = params[:id]
+    @conversation_messages = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, @recipient_id]) + Message.where(["sender_id = ? and recipient_id = ?", @recipient_id, @current_user.id])).sort_by(&:created_at)
+  
+    @message = Message.new
+  end
 
   def edit
   end

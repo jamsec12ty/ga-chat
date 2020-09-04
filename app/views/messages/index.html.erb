@@ -49,15 +49,14 @@
     </ul>
     <div class="message_send_wrapper hide">
       <%= form_for @message, html: {multipart: true, class: 'message_send_form'} do |f| %>
-        <hr>
-        <%= f.label :content %>
+        <!-- # <%= f.label :content %> -->
         <%= f.text_area :content, class: 'message_send_text' %>
         <br>
         <div class="thumbnails"></div>
         <div class="progress_bar_parent">
           <div class="progress_bar"></div>
         </div>
-        <br><br>
+        <br>
         <button class="message_send_button">Send</button>
       <% end %>
     </div>

@@ -59,7 +59,13 @@ a:hover {
 
 .notification {
   padding: 20px;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #262525;
+  color: white;
+  z-index: 1000;
+}
+
+.notification a {
+  color: white;
 }
 
 /* ---------------------- Homepage ---------------------- */
@@ -188,6 +194,27 @@ label {
 
 .message_window li {
   padding: 10px 0;
+}
+
+/* -------------------- Message Send -------------------- */
+
+textarea {
+  resize: none;
+  background-color: #f0f0f0;
+  border: 0px;
+  display: block;
+  width: 40%;
+  margin: 10px 0 20px 0;
+  padding: 15px;
+}
+
+.message_send_button {
+  background-color: #262525;
+  color: white;
+  border: none;
+  height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* ------------------- Message Search ------------------- */

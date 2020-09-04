@@ -21,7 +21,6 @@
                   <h5> <%= friend.name %> </h5>
                   </div>
                   <div class="col-4">
-                  <a class="view_profile" id=<%= friend.id %>>View Profile</a>
                   </div>
                 </div>
               </li>
@@ -42,7 +41,6 @@
               <li>
                 <%= check_user_image_small(friend) %>
                 <%=link_to friend.name, user_path(friend.id)%>
-                <p class="view_profile" id=<%= friend.id %>>View Profile</p>
               </li>
               <% end %>
             </ul>

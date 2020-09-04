@@ -138,11 +138,11 @@ $(document).ready(function () {
 
   // TODO : Unsigned Name, the owner of the heroku config keys will have to enable unsigned upload under their account settings in cloudinary
   // This attaches the <input type=file> file chooser to the form.
-  $('.message_send_text').after($.cloudinary.unsigned_upload_tag("rruzhrqp",{ cloud_name: 'sarop-bajra' }));
+  $('.message_send_text').after($.cloudinary.unsigned_upload_tag("hzfua5ru",{ cloud_name: 'dsv0a2eu2' }));
 
   $('.cloudinary_fileupload').unsigned_cloudinary_upload(
-    "rruzhrqp",
-    { cloud_name: 'sarop-bajra', tags: 'browser_uploads' },
+    "hzfua5ru",
+    { cloud_name: 'dsv0a2eu2', tags: 'browser_uploads' },
     { multiple: true }
   )
   .bind('fileuploadchange', function(e, data){
@@ -268,7 +268,6 @@ $(document).ready(function () {
       $results.append(`
       <li>
       <p><a href = '/users/${user.id}'>${user.name}</a></p>
-      <p class="view_profile" id=${user.id}>View Profile</p>
       </li>`);
     });
 
