@@ -16,7 +16,6 @@ class MessagesController < ApplicationController
         type: "message",
         message: @message,
         user: @message.sender,
-        attachment: @message.attachment
     end
 
     # we respond to the ajax request with the created message object
@@ -57,9 +56,9 @@ class MessagesController < ApplicationController
   end
 
   def message_show
+
     messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient).sort_by(&:created_at)
 
-    # render json: messages, include: [:sender, :recipient, :attachment]
     render json: messages, include: [:sender, :recipient]
   end
 
