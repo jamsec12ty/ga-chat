@@ -6,6 +6,7 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
   // app/channels/messages_channel.rb
   received: function(data) {
     console.log("message received", data);
+
     if (data.type === "message"){
       $('.message_window').append(`
         <li>
@@ -16,6 +17,7 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
           <p>${data.message.created_at.split('T').join(' ').substring(0, data.message.created_at.length - 5)}</p>
         </li>
       `);
+      $('.message_window').append($.cloudinary.image(data.message.attachment, { width: 200 }));
       $('.notification').empty();
       $('.notification').append(`You have a new message from ${data.user.name}!`);
     }else if (data.type === "friend_request"){
