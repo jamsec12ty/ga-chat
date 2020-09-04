@@ -21,20 +21,21 @@ $(document).ready(function () {
       recipientId = query;
       $(`#${query}`).addClass('selected');
       $.getJSON(`messages/show/${query}`)
-        .done(data => {
-          console.log(data);
-          data.forEach(message => {
-            $('.message_window').append(`
-        <li>
-          <p><strong>${message.sender.name}</strong></p>
-          <div class="message_item">
-            <p>${message.content}</p>
-          </div>
-          <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
-        </li>
-        `)
-          })
-        }).fail(error => console.log(error));
+      .done(data => {
+        data.forEach(message => {
+          $('.message_window').append(`
+          <li>
+            <p><strong>${message.sender.name}</strong></p>
+            <div class="message_item">
+              <p>${message.content}</p>
+            </div>
+            <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+            </li>
+            `)
+          }); // End forEach
+          $('.message_window_wrapper').animate({scrollTop: $('.message_window_wrapper').prop('scrollHeight')}, 1000);
+      })
+      .fail(error => console.log(error));
       $('.message_send_wrapper').show();
     }
   }
@@ -58,14 +59,15 @@ $(document).ready(function () {
     const query = $('.message_search_text').val().toLowerCase();
 
     if (query === '') {
+      $('.message_results').show();
       $('.message_results').append(
         `<h4>Please enter keywords and then search.</h4>`
-      )
+      );
     } else {
       const searchURL = `/messages/search`;
       const string = query.replace(/(\s+)/, "(<[^>]+>)*$1(<[^>]+>)*");
       const pattern = new RegExp("(" + string + ")", "gi");
-
+      $('.message_results').show();
       $.getJSON(searchURL)
       .done(data => {
         $('.message_search_text').val('');
@@ -76,9 +78,9 @@ $(document).ready(function () {
             let keyWords = message.content.substr(index, query.length);
             let results = message.content.replace(pattern, `<mark>${keyWords}</mark>`);
             $('.message_results').append(
-              `<p>${results}</p>
-              <p>${message.sender.name} to ${message.recipient.name}</p>
-              <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>`)
+              `<li><p>${results}</p>
+              <p class="sm-text"><strong>${message.sender.name} to ${message.recipient.name}</strong></p>
+              <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p></li>`)
           }
         });
         if ($('.message_results').html() === '') {
@@ -96,11 +98,13 @@ $(document).ready(function () {
     $('.message_results').empty();
     $('.message_search_text').val('');
     $('.message_search_text').focus()
+    $('.message_results').hide();
   });
 
   // Show message window
   $('.message_list_item').on('click', (e) => {
     $('.message_window').empty();
+    $('.message_window').removeClass('selected');
     $('.message_send_wrapper').show();
     $(e.currentTarget).addClass('selected');
     $(e.currentTarget).siblings().removeClass('selected');
@@ -118,25 +122,27 @@ $(document).ready(function () {
           <div class="message_item">
             <p>${message.content}</p>
           </div>
-          <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+            <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
         </li>
         `);
         if (message.attachment !== null) {
           $('.message_window').append($.cloudinary.image(message.attachment, { width: 200 }));
         }
+      }) // End forEach
+      $('.message_window_wrapper').animate({scrollTop: $('.message_window_wrapper').prop('scrollHeight')}, 1000);
       })
-    }).fail(error => console.log(error));
+    .fail(error => console.log(error));
   });
 
   /* ------------------- Cloudinary Image Upload ------------------- */
 
   // TODO : Unsigned Name, the owner of the heroku config keys will have to enable unsigned upload under their account settings in cloudinary
   // This attaches the <input type=file> file chooser to the form.
-  $('.message_send_text').after($.cloudinary.unsigned_upload_tag("rruzhrqp",{ cloud_name: 'sarop-bajra' }));
+  $('.message_send_text').after($.cloudinary.unsigned_upload_tag("dtndyne2",{ cloud_name: 'dnocjljcb' }));
 
   $('.cloudinary_fileupload').unsigned_cloudinary_upload(
-    "rruzhrqp",
-    { cloud_name: 'sarop-bajra', tags: 'browser_uploads' },
+    "dtndyne2",
+    { cloud_name: 'dnocjljcb', tags: 'browser_uploads' },
     { multiple: true }
   )
   .bind('fileuploadchange', function(e, data){
@@ -176,7 +182,6 @@ $(document).ready(function () {
         { width: 100, height: 100, crop: 'thumb', gravity: 'face' }
       )
     );
-
 })
 
   // Send message form
@@ -193,31 +198,27 @@ $(document).ready(function () {
       attachment: cloudinaryUploadPublicId
     })
     .done(message => {
-
       $(".cloudinary_fileupload").val("").show(); // Shown for the next upload
       $('.thumbnails').empty(); // Clear for the next upload
-
       $('.message_window').append(`
-        <li>
-          <p><strong>${message.sender.name}</strong></p>
-          <div class="message_item">
-            <p>${message.content}</p>
-          </div>
-          <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
-        </li>`
-      );
+      <li>
+        <p><strong>${message.sender.name}</strong></p>
+        <div class="message_item">
+          <p>${message.content}</p>
+        </div>
+        <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+      </li>
+      `)
       $(`.last_message_${recipientId}`).html(`
-        <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
         <p>${message.content}</p>
-        `)
-
+        <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+      `)
       if (cloudinaryUploadPublicId !== null) {
         $('.message_window').append($.cloudinary.image(message.attachment, { width: 200 }));
         // Clearing this so that we do not attach an old upload to a new message
         cloudinaryUploadPublicId = null;
       }
-
-
+      $('.message_window_wrapper').animate({scrollTop: $('.message_window_wrapper').prop('scrollHeight')}, 1000);
     })
     .fail(error => console.log(error))
     $('.message_send_text').val('');
@@ -227,6 +228,7 @@ $(document).ready(function () {
   /* --------------------- User Search -------------------- */
 
   $('.user_search_form').on('submit', function(ev){
+    $('.user_results').show();
     ev.preventDefault(); // stop form from submitting
     const query = $('.user_search_text').val();
     getSearchResults(query);
@@ -238,7 +240,6 @@ $(document).ready(function () {
       $('.user_results').empty();
       return;
     }
-
     // Perform AJAX request
     $.getJSON(`/users/search/${queryText}`, {
       name: queryText
@@ -251,8 +252,8 @@ $(document).ready(function () {
     });
   };
 
-
   $('.user_search_text').on('input', function() {
+    $('.user_results').show();
     getSearchResults($(this).val());
   });
 
@@ -265,9 +266,9 @@ $(document).ready(function () {
     // Display each result on the page:
     results.forEach( user => {
       $results.append(`
+      <li>
       <p><a href = '/users/${user.id}'>${user.name}</a></p>
-      <p class="view_profile" id=${user.id}>View Profile</p>
-      `);
+      </li>`);
     });
 
     if ($('.user_results').html() === '') {
@@ -278,14 +279,17 @@ $(document).ready(function () {
       $('.user_results').prepend(`<button class="user_search_back">Back</button>`)
   }; // displaySearchResults()
 
+  // Back button
   $(document).on('click', '.user_search_back', function(){
     $('.user_results').empty();
     $('.user_search_text').val('');
-    $('.user_search_text').focus()
+    $('.user_search_text').focus();
+    $('.user_results').hide();
   });
 
   /* -------------------- Friends -------------------- */
 
+  // Send message to friends
   $('.message_friends').on('click', (e) => {
     console.log(e.currentTarget.id);
     let id = e.currentTarget.id;
@@ -318,7 +322,7 @@ $(document).ready(function () {
     .fail(error => console.log(error));
   });
 
-
+  // Add friend
   $("#add_friend").on('click', function(){
     const friend_id = $(this).attr("friend_id");
     console.log("add button clicked", friend_id);
@@ -331,6 +335,7 @@ $(document).ready(function () {
     .fail(error => console.log(error));
   });
 
+  // Accept friend
   $("#accept_friend").on('click', function(){
     const friend_id = $(this).attr("friend_id");
     const current_user_id = $(this).attr("current_user_id");
