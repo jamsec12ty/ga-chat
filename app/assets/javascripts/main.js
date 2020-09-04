@@ -118,7 +118,8 @@ $(document).ready(function () {
           <p>${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
         </li>
         `)
-      })
+      });
+
     }).fail(error => console.log(error));
   });
 
