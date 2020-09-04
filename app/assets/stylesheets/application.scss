@@ -57,6 +57,11 @@ a:hover {
   padding: 40px 40px;
 }
 
+.notification {
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
 /* ---------------------- Homepage ---------------------- */
 
 .main_nav {
@@ -145,7 +150,7 @@ label {
   background-color: #F6F6F6;
   padding: 30px 20px;
   height: 100vh;
-    overflow: auto;
+  overflow: auto;
 }
 
 .message_list_item {
@@ -155,7 +160,7 @@ label {
 
 .message_window_wrapper {
   height: 100vh;
-  overflow-y: auto;
+  overflow: auto;
   position: relative;
 }
 

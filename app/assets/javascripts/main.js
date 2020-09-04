@@ -19,21 +19,22 @@ $(document).ready(function () {
       recipientId = query;
       $(`#${query}`).addClass('selected');
       $.getJSON(`messages/show/${query}`)
-        .done(data => {
-          console.log(data);
-          data.forEach(message => {
-            $('.message_window').append(`
-        <li>
-          <p><strong>${message.sender.name}</strong></p>
-          <div class="message_item">
-            <p>${message.content}</p>
-          </div>
-          <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
-        </li>
-        `)
-          })
-        }).fail(error => console.log(error));
+      .done(data => {
+        data.forEach(message => {
+          $('.message_window').append(`
+          <li>
+            <p><strong>${message.sender.name}</strong></p>
+            <div class="message_item">
+              <p>${message.content}</p>
+            </div>
+            <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
+          </li>
+          `)
+        })
+      })  
+      .fail(error => console.log(error));
       $('.message_send_wrapper').show();
+      $('.message_window_wrapper').scrollTop($('.message_window_wrapper').prop('scrollHeight'));
     }
   }
 
@@ -123,6 +124,7 @@ $(document).ready(function () {
         `)
       })
     }).fail(error => console.log(error));
+    $('.message_window_wrapper').scrollTop($('.message_window_wrapper').prop('scrollHeight'));
   });
 
   // Send message form
@@ -152,6 +154,7 @@ $(document).ready(function () {
     })
     .fail(error => console.log(error))
     $('.message_send_text').val('');
+    $('.message_window_wrapper').scrollTop($('.message_window_wrapper').prop('scrollHeight'));
   });
 
 
@@ -170,7 +173,6 @@ $(document).ready(function () {
       $('.user_results').empty();
       return;
     }
-
     // Perform AJAX request
     $.getJSON(`/users/search/${queryText}`, {
       name: queryText
@@ -221,6 +223,7 @@ $(document).ready(function () {
 
   /* -------------------- Friends -------------------- */
 
+  // Send message to friends
   $('.message_friends').on('click', (e) => {
     console.log(e.currentTarget.id);
     let id = e.currentTarget.id;
@@ -253,7 +256,7 @@ $(document).ready(function () {
     .fail(error => console.log(error));
   });
 
-
+  // Add friend
   $("#add_friend").on('click', function(){
     const friend_id = $(this).attr("friend_id");
     console.log("add button clicked", friend_id);
@@ -266,6 +269,7 @@ $(document).ready(function () {
     .fail(error => console.log(error));
   });
 
+  // Accept friend
   $("#accept_friend").on('click', function(){
     const friend_id = $(this).attr("friend_id");
     const current_user_id = $(this).attr("current_user_id");
