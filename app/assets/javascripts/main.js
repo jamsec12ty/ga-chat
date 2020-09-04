@@ -28,13 +28,13 @@ $(document).ready(function () {
               <p>${message.content}</p>
             </div>
             <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
-          </li>
-          `)
-        })
+            </li>
+            `)
+          }); // End forEach
+          $('.message_window_wrapper').animate({scrollTop: $('.message_window_wrapper').prop('scrollHeight')}, 1000);
       })  
       .fail(error => console.log(error));
       $('.message_send_wrapper').show();
-      $('.message_window_wrapper').scrollTop($('.message_window_wrapper').prop('scrollHeight'));
     }
   }
 
@@ -122,9 +122,9 @@ $(document).ready(function () {
             <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
         </li>
         `)
-      })
+      }); // End forEach
+      $('.message_window_wrapper').animate({scrollTop: $('.message_window_wrapper').prop('scrollHeight')}, 1000);
     }).fail(error => console.log(error));
-    $('.message_window_wrapper').scrollTop($('.message_window_wrapper').prop('scrollHeight'));
   });
 
   // Send message form
@@ -151,10 +151,10 @@ $(document).ready(function () {
         <p>${message.content}</p>
         <p class="sm-text">${message.created_at.split('T').join(' ').substring(0, message.created_at.length - 5)}</p>
       `)
-    })
+      $('.message_window_wrapper').animate({scrollTop: $('.message_window_wrapper').prop('scrollHeight')}, 1000);
+    }) // End forEach
     .fail(error => console.log(error))
     $('.message_send_text').val('');
-    $('.message_window_wrapper').scrollTop($('.message_window_wrapper').prop('scrollHeight'));
   });
 
 
@@ -185,7 +185,6 @@ $(document).ready(function () {
     });
   };
 
-
   $('.user_search_text').on('input', function() {
     $('.user_results').show();
     getSearchResults($(this).val());
@@ -214,6 +213,7 @@ $(document).ready(function () {
       $('.user_results').prepend(`<button class="user_search_back">Back</button>`)
   }; // displaySearchResults()
 
+  // Back button
   $(document).on('click', '.user_search_back', function(){
     $('.user_results').empty();
     $('.user_search_text').val('');

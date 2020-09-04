@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     resources :requests
   end
 
+  get "/requests" => "requests#index"
+  
   # ----------------------- Messages ----------------------- #
   get "/messages/search" => "messages#message_search"
   get "/messages/show/:query" => "messages#message_show"
