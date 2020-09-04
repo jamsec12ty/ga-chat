@@ -1,7 +1,6 @@
-<div class="content">
-
-  <h2>Login to GA-Chat!</h2>
-
+<div class="container user_login">
+  <h1>Login to GA-Chat!</h1>
+  <hr>
   <% if flash[:error] %>
   <!-- print out any error messages from the controller -->
   <br>
@@ -9,19 +8,16 @@
     <%= flash[:error] %>
   </strong>
   <br>
-  <br>
   <% end %>
 
-  <hr>
-  <div class="form">
+  <div class="form edit_form">
   <%= form_tag login_path do %>
     <%= label_tag :email %>
     <%= email_field_tag :email %>
     <%= label_tag :password %>
     <%= password_field_tag :password %>
-  <hr>
-  <br>
-  <%= submit_tag 'Login' %>
-    <% end %>
+    <br>
+  <%= submit_tag 'Login', class: "edit_button", style: "background-color: #262525" %>
+  <% end %>
   </div>
 </div>
