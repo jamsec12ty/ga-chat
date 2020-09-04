@@ -1,15 +1,14 @@
-<p>
-<strong>Name:</strong> <%= @user.name %>
-</p>
-<p>
-<strong>Email: </strong><%= @user.email %>
-</p>
-<p>
-<strong>Profile Image: </strong>
-</p>
-<div class="user_avatar">
-  <%= check_user_image_large(@user) %>
-</div>
+<div class="container user_profile">
+  <h5>Name:</h5>
+  <h3><%= @user.name %></h3>
+  <br>
+  <h5>Email: </h5>
+  <h3><%= @user.email %></h3>
+  <br>
+  <h5>Profile Image: </h5>
+  <div class="user_avatar">
+    <%= check_user_image_large(@user) %>
+  </div>
 
 <% if @user.id === @current_user.id %>
   <p><%= link_to "Edit profile", edit_user_path(@user.id) %></p>
@@ -23,3 +22,4 @@
 <% else %>
   <%= button_to "Add Friend", user_friends_path(@user.id), method: :post %>
 <% end %>
+</div>

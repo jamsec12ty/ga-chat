@@ -56,7 +56,6 @@ class MessagesController < ApplicationController
   end
 
   def message_show
-
     messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient).sort_by(&:created_at)
 
     render json: messages, include: [:sender, :recipient]
