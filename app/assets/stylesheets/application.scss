@@ -231,5 +231,18 @@ label {
   z-index: 100;
   right: 20px;
   bottom: 40px;
-  
+
+}
+
+.progress_bar{
+  /* display: none; */
+  width: 0px;
+  height: 15px;
+  /* border: 1px solid black; */
+  background-color: green;
+}
+
+.progress_bar_parent{
+  display: inline-block;
+  width: 150px;
 }

@@ -128,11 +128,11 @@ $(document).ready(function () {
     }).fail(error => console.log(error));
   });
 
+  /* ------------------- Cloudinary Image Upload ------------------- */
 
   // TODO : Unsigned Name, the owner of the heroku config keys will have to enable unsigned upload under their account settings in cloudinary
   // This attaches the <input type=file> file chooser to the form.
-  $('.message_send_text').after($.cloudinary.unsigned_upload_tag("rruzhrqp",
-  { cloud_name: 'sarop-bajra' }));
+  $('.message_send_text').after($.cloudinary.unsigned_upload_tag("rruzhrqp",{ cloud_name: 'sarop-bajra' }));
 
   $('.cloudinary_fileupload').unsigned_cloudinary_upload(
     "rruzhrqp",

@@ -34,12 +34,12 @@ class MessagesController < ApplicationController
     @message = Message.new
   end
 
-  def show
-    @recipient_id = params[:id]
-    @conversation_messages = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, @recipient_id]) + Message.where(["sender_id = ? and recipient_id = ?", @recipient_id, @current_user.id])).sort_by(&:created_at)
-
-    @message = Message.new
-  end
+  # def show
+  #   @recipient_id = params[:id]
+  #   @conversation_messages = (Message.where(["sender_id = ? and recipient_id = ?", @current_user.id, @recipient_id]) + Message.where(["sender_id = ? and recipient_id = ?", @recipient_id, @current_user.id])).sort_by(&:created_at)
+  #
+  #   @message = Message.new
+  # end
 
   def edit
   end
@@ -57,9 +57,10 @@ class MessagesController < ApplicationController
   end
 
   def message_show
-    messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient, :attachment)
+    messages = Message.where(sender_id: @current_user.id, recipient_id: params[:query]).or(Message.where(sender_id: params[:query], recipient_id: @current_user.id)).includes(:sender, :recipient).sort_by(&:created_at)
 
-    render json: messages, include: [:sender, :recipient, :attachment]
+    # render json: messages, include: [:sender, :recipient, :attachment]
+    render json: messages, include: [:sender, :recipient]
   end
 
   private
