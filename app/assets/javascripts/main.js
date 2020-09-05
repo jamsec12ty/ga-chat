@@ -333,6 +333,7 @@ $(document).ready(function () {
       console.log("Friendship create response:", data);
       $(this).text("Pending");
       $(this).prop('disabled', true);
+      $(this).siblings().show();
     })
     .fail(error => console.log(error));
   });
@@ -376,6 +377,11 @@ $(document).ready(function () {
     $('.received_requests').show();
     $('.pending_requests_tab').attr('id', '');
     $('.received_requests_tab').attr('id', 'link_current');
+  });
+
+  /* -------------------- Notification -------------------- */
+  $('.notification_link').on('click', function(){
+    $('.notification').hide();
   });
 
 });

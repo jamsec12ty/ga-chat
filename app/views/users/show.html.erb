@@ -20,9 +20,13 @@
   <% elsif @current_user.pending_requests.include? @user %>
     <p>Waiting for Approval</p>
   <% elsif @current_user.received_requests.include? @user %>
-    <button id="accept_friend" friend_id="<%= @user.id %>" current_user_id="<%= @current_user.id %>">Accept Friend</button>
+    <%= button_to "Accept Friend", messages_path(@user.id), id: "accept_friend", friend_id: @user.id, current_user_id: @current_user.id, method: :get %>
   <% else %>
-    <%# button_to "Add Friend", user_friends_path(@user.id), method: :post %>
-    <button id="add_friend" friend_id="<%= @user.id %>">Add Friend</button>
+    <div>
+      <button id="add_friend" friend_id="<%= @user.id %>">Add Friend</button>
+      <div class="hide">
+      <%= button_to "Cancel Request", user_friend_path(@user.id, @current_user.id), method: "delete" %>
+      </div>
+    </div>
   <% end %>
 </div>
