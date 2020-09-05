@@ -1,7 +1,7 @@
 <div class="container user_profile">
 <h1>Create an Account</h1>
 <hr>
-
+​
 <% if @user.errors.full_messages.any? %>
   <ul>
     <% @user.errors.full_messages.each do |e| %>
@@ -11,20 +11,20 @@
 <% end %>
 <div class="form edit_form">
 <%= form_for @user do |f| %>
-
+​
   <%= f.label :name %>
   <%= f.text_field :name %>
-
+​
   <%= f.label :email %>
   <%= f.email_field :email %>
-
+​
   <%= f.label :password %>
   <%= f.password_field :password %>
-
+​
   <%= f.label :password_confirmation %>
   <%= f.password_field :password_confirmation %>
   <br>
-
+​
   <%= f.submit 'Sign Up', class: "edit_button", style: "background-color: #262525"%>
 <% end %>
 </div>
