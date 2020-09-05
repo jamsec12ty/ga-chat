@@ -27,7 +27,7 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
       if (data.status === "pending"){
         console.log("friend request pending");
         $('.notification').empty();
-        $('.notification').append(`<p>You have a new freind request from ${data.user_name}!</p><a href="/requests">Please check requests page.</a>`);
+        $('.notification').append(`<p>You have a new friend request from ${data.user_name}!</p><a href="/requests">Please check requests page.</a>`);
 
       }else if (data.status === "confirmed"){
         console.log("friend request confirmed");
