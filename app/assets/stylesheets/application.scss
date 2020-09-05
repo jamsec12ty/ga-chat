@@ -165,7 +165,7 @@ label {
 }
 
 .message_window_wrapper {
-  height: 100vh;
+  height: 75vh;
   overflow: auto;
   position: relative;
 }
@@ -185,7 +185,6 @@ label {
   background-color: white;
   padding: 20px;
   width: 100%;
-  // border-top: 1px solid #aeacac
 }
 
 .message_window {
@@ -206,7 +205,7 @@ textarea {
   width: 40%;
   margin: 10px 0 20px 0;
   padding: 15px;
-  height: 40px;
+  // height: 40px;
 }
 
 .message_send_button {
