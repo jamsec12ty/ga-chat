@@ -34,7 +34,7 @@ $(document).ready(function () {
             </li>
             `)
           }); // End forEach
-          $('.message_window_wrapper').animate({scrollTop: $('.message_window_wrapper').prop('scrollHeight')}, 1000);
+          $('.message_window_wrapper').animate({scrollTop: $('.message_window_wrapper').prop('scrollHeight')}, 500);
       })
       .fail(error => console.log(error));
       $('.message_send_wrapper').show();
