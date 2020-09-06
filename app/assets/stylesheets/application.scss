@@ -68,6 +68,10 @@ a:hover {
   color: white;
 }
 
+.notification_link {
+  cursor: pointer;
+}
+
 /* ---------------------- Homepage ---------------------- */
 
 .main_nav {
@@ -190,7 +194,6 @@ label {
   background-color: white;
   padding: 0 0 20px;
   width: 100%;
-  // border-top: 1px solid #aeacac
 }
 
 .message_window {

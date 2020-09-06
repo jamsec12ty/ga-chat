@@ -20,19 +20,19 @@ App.messages = App.cable.subscriptions.create('MessagesChannel', {
       $('.message_window').append($.cloudinary.image(data.message.attachment, { width: 200 }));
       $('.notification').show();
       $('.notification').empty();
-      $('.notification').append(`You have a new message from ${data.user.name}!`);
+      $('.notification').append(`<p>You have a new message from ${data.user.name}!</p> <a class="notification_link" href="/messages">See you new messages.</a>`);
     }else if (data.type === "friend_request"){
       $('.notification').show();
 
       if (data.status === "pending"){
         console.log("friend request pending");
         $('.notification').empty();
-        $('.notification').append(`<p>You have a new freind request from ${data.user_name}!</p><a href="/requests">Please check requests page.</a>`);
+        $('.notification').append(`<p>You have a new friend request from ${data.user_name}!</p><a class="notification_link" href="/requests">Please check requests page.</a>`);
 
       }else if (data.status === "confirmed"){
         console.log("friend request confirmed");
         $('.notification').empty();
-        $('.notification').append(`<p>Your friend request has been accepted by ${data.user_name}!</p><a href="/messages">You can now message each other :)</a>`);
+        $('.notification').append(`<p>Your friend request has been accepted by ${data.user_name}!</p><a class="notification_link" href="/messages">You can now message each other :)</a>`);
       }
 
     }else {

@@ -13,6 +13,7 @@ $(document).ready(function () {
 
   /* -------------------- Local Storage ------------------- */
 
+  // Show the message history user just clicked
   if (localStorageSaved) {
     if (localStorage.id !== undefined) {
       console.log('localStorage', localStorage.id);
@@ -40,9 +41,7 @@ $(document).ready(function () {
     }
   }
 
-
   /* ------------------- Message Search ------------------- */
-
 
   $('.show_friends').on('click', function(){
     $('.message_friends_list').show();
@@ -52,6 +51,7 @@ $(document).ready(function () {
     $('.message_friends_list').hide();
   });
 
+  // Search message 
   $('.message_search_form').on('submit', (e) => {
     e.preventDefault();
     $('.message_results').empty();
@@ -94,6 +94,7 @@ $(document).ready(function () {
     }
   });
 
+  // Search back button
   $(document).on('click', '.message_search_back', function(){
     $('.message_results').empty();
     $('.message_search_text').val('');
@@ -227,6 +228,7 @@ $(document).ready(function () {
 
   /* --------------------- User Search -------------------- */
 
+  // Search user form
   $('.user_search_form').on('submit', function(ev){
     $('.user_results').show();
     ev.preventDefault(); // stop form from submitting
@@ -331,6 +333,7 @@ $(document).ready(function () {
       console.log("Friendship create response:", data);
       $(this).text("Pending");
       $(this).prop('disabled', true);
+      $(this).siblings().show();
     })
     .fail(error => console.log(error));
   });
@@ -374,6 +377,11 @@ $(document).ready(function () {
     $('.received_requests').show();
     $('.pending_requests_tab').attr('id', '');
     $('.received_requests_tab').attr('id', 'link_current');
+  });
+
+  /* -------------------- Notification -------------------- */
+  $('.notification_link').on('click', function(){
+    $('.notification').hide();
   });
 
 });
